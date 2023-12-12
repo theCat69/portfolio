@@ -1,15 +1,29 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import Hero from "~/components/section/hero";
+import Nav from "~/components/section/nav";
+import Skills from "~/components/section/skills";
 
 export default component$(() => {
   return (
     <>
-      <h1>Hi 👋</h1>
-      <p>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </p>
+      <main class="relative">
+        <Nav />
+        <Hero />
+        <Skills />
+        <section class="padding w-full">
+          Demo projects
+        </section>
+        <section class="padding w-full">
+          A propos de moi
+        </section>
+        <section class="padding sm:py-32 py-16 w-full">
+          Contact me
+        </section>
+        <section class="bg-middle padding-x padding-t pb-8">
+          Footer
+        </section>
+      </main>
     </>
   );
 });
