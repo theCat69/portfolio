@@ -1,5 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import AboutMe from "~/components/section/about-me";
+import Contact from "~/components/section/contact";
+import DemoProjects from "~/components/section/demo-projects";
 import Hero from "~/components/section/hero";
 import Nav from "~/components/section/nav";
 import Skills from "~/components/section/skills";
@@ -11,15 +14,9 @@ export default component$(() => {
         <Nav />
         <Hero />
         <Skills />
-        <section class="padding w-full">
-          Demo projects
-        </section>
-        <section class="padding w-full">
-          A propos de moi
-        </section>
-        <section class="padding sm:py-32 py-16 w-full">
-          Contact me
-        </section>
+        <DemoProjects />
+        <AboutMe />
+        <Contact />
         <section class="bg-middle padding-x padding-t pb-8">
           Footer
         </section>

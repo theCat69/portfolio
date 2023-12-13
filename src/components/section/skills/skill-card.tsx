@@ -4,7 +4,7 @@ import { Skill } from "~/constants";
 export default component$((props: Skill) => {
   return (
     <>
-      <div key={props.id} class="min-h-full flex flex-col bg-primary relative rounded-xl">
+      <div class="min-h-full flex flex-col bg-primary relative rounded-xl">
         <div class="flex flex-row justify-between absolute w-full py-2 px-4">
           {props.imgs.map((img, index) => (
             <img key={index} src={img} alt="icon" width={40} height={40} />
