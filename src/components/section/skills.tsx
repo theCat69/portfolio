@@ -5,7 +5,7 @@ import SkillCard from "./skills/skill-card";
 export default component$(() => {
   return (
     <>
-      <section id="my-skills" class="w-full min-h-screen bg-middle">
+      <section id="my-skills" class="w-full min-h-screen bg-middle py-2">
         <div class="min-h-screen flex flex-col justify-evenly gap-4">
           <div class="flex flex-row justify-center">
             <h1 class="text-4xl text-bold text-primary">My skills</h1>

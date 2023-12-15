@@ -1,0 +1,72 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "mail": [
+    {
+      "name": "",
+      "email": "",
+      "message": "",
+      "files": [],
+      "id": 1
+    },
+    {
+      "name": "Felix",
+      "email": "dakjd@mail.com",
+      "message": "My message",
+      "files": [],
+      "id": 2
+    },
+    {
+      "name": "Ffa",
+      "email": "cqscq",
+      "message": "des maislq ",
+      "files": [
+        null,
+        null
+      ],
+      "id": 3
+    },
+    {
+      "name": "",
+      "email": "",
+      "message": "",
+      "files": [],
+      "id": 4
+    },
+    {
+      "name": "",
+      "email": "",
+      "message": "",
+      "files": [],
+      "id": 5
+    },
+    {
+      "name": "",
+      "email": "",
+      "message": "",
+      "files": [],
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    }
+  ]
+}

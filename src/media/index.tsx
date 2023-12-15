@@ -9,6 +9,8 @@ import ciIcon from './ci_icon.svg';
 import sqlIcon from './sql-icon.svg';
 import dbIcon from './database-icon.svg';
 import testingPyramidIcon from './testing_pyramide.svg';
+import attachmentIcon from './attachment-icon.svg';
+import crossIcon from './cross-mark-icon.svg';
 
 export {
   hamburger,
@@ -21,5 +23,7 @@ export {
   ciIcon,
   sqlIcon,
   dbIcon,
-  testingPyramidIcon
+  testingPyramidIcon,
+  attachmentIcon,
+  crossIcon
 }
