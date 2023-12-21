@@ -9,19 +9,43 @@ interface ContactForm {
   files: NoSerialize<File>[] | null | undefined,
 }
 
+interface FileDto {
+  name: string,
+  content: string
+}
+
+interface ContactFormDto {
+  name: string,
+  email: string,
+  message: string,
+  files: FileDto[],
+}
+
+function fileToBase64(file: File): Promise<FileDto> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const resultString = reader.result as string;
+      const fileContentAsB64 = resultString.substring(resultString.indexOf(',') + 1, resultString.length - 1);
+      resolve({
+        name: file.name,
+        content: fileContentAsB64
+      });
+    }
+    reader.onerror = error => reject(error);
+  });
+}
+
 const mailServiceURL: string = import.meta.env.VITE_MAIL_SENDER_URL;
-const sendMailToService = server$(async (contactValues: ContactForm) => {
-  const formData = new FormData();
-  formData.append('name', contactValues.name);
-  formData.append('email', contactValues.email);
-  formData.append('message', contactValues.message);
-  if (contactValues.files) {
-    contactValues.files.forEach((file) => formData.append('file', file as Blob)
-    )
-  }
+
+const sendMailToService = server$(async (contactValues: ContactFormDto) => {
   const reponse = await fetch(`${mailServiceURL}/mail`, {
     method: "POST",
-    body: formData,
+    body: JSON.stringify(contactValues),
+    headers: {
+      "Content-Type": "application/json",
+    }
   });
   return reponse.json();
 });
@@ -65,8 +89,16 @@ export default component$(() => {
       <section id="contact-me" class="w-full flex flex-col justify-center min-h-screen bg-primary">
         <div class="h-min-screen flex flex-col text-center items-center justify-center gap-16">
           <h1 class="text-4xl text-dark-1">Contact me</h1>
-          <form preventdefault:submit onSubmit$={() => {
-            console.log(contactFormState.name, contactFormState.email, contactFormState.message, contactFormState.files);
+          <form preventdefault:submit onSubmit$={async () => {
+            const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
+            await sendMailToService(
+              {
+                name: contactFormState.name,
+                email: contactFormState.email,
+                message: contactFormState.message,
+                files: files ? await Promise.all(files) : [],
+              }
+            );
             contactFormState.name = '';
             contactFormState.email = '';
             contactFormState.message = '';
@@ -135,11 +167,7 @@ export default component$(() => {
                 class="rounded w-full h-64 p-2"
               ></textarea>
             </label>
-            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer mt-5"
-              onClick$={async () => {
-                await sendMailToService(contactFormState);
-              }}
-            >Send</button>
+            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer mt-5">Send</button>
           </form>
         </div>
       </section>
