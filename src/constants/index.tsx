@@ -1,4 +1,4 @@
-import { angularIcon, ciIcon, dbIcon, javaIcon, jenkinsIcon, springBootIcon, sqlIcon, testingPyramidIcon, typeScriptIcon } from "~/media"
+import { angularIcon, ciIcon, dbIcon, javaIcon, jenkinsIcon, screenJenkins, screenNotes, screenPortfolio, springBootIcon, sqlIcon, testingPyramidIcon, typeScriptIcon } from "~/media"
 
 export interface NavLink {
   id: number,
@@ -72,6 +72,72 @@ export const skills: Skill[] = [
 
     ],
     title: "Formation",
+    description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+]
+
+export interface DemoProject {
+  id: number,
+  title: string,
+  preview?: DemoProjectPreview,
+  repo?: string,
+  description: string
+}
+
+export interface DemoProjectPreview {
+  link: string,
+  img: string,
+}
+
+const websiteRoot = "https://thecatmaincave.com";
+const githubAccountRoot = "https://github.com/theCat69";
+
+export const demoProjects: DemoProject[] = [
+  {
+    id: 1,
+    preview: {
+      link: websiteRoot,
+      img: screenPortfolio,
+    },
+    title: "Portfolio",
+    repo: `${githubAccountRoot}/portfolio`,
+    description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+  {
+    id: 2,
+    preview: {
+      link: `${websiteRoot}/notes`,
+      img: screenNotes,
+    },
+    title: "Digital piano",
+    repo: `${githubAccountRoot}/vite-native-play-notes`,
+    description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+  {
+    id: 3,
+    preview: {
+      link: `${websiteRoot}/jenkins`,
+      img: screenJenkins,
+    },
+    title: "Jenkins instance",
+    description: "Guest Guest Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+  {
+    id: 4,
+    title: "Mail sender app",
+    repo: `${githubAccountRoot}/mail-sender-app`,
+    description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+  {
+    id: 5,
+    title: "Java argument parser",
+    repo: `${githubAccountRoot}/java-parse-args`,
+    description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+  },
+  {
+    id: 6,
+    title: "Blazingly fast Java version manager",
+    repo: `${githubAccountRoot}/blazingly-fast-java-version-manager`,
     description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
   },
 ]

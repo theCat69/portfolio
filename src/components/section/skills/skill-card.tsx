@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Skill } from "~/constants";
+import type { Skill } from "~/constants";
 
 export default component$((props: Skill) => {
   return (

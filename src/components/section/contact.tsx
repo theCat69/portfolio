@@ -1,4 +1,5 @@
-import { NoSerialize, component$, noSerialize, useStore } from "@builder.io/qwik";
+import type { NoSerialize } from "@builder.io/qwik";
+import { component$, noSerialize, useStore } from "@builder.io/qwik";
 import { server$ } from "@builder.io/qwik-city";
 import { attachmentIcon, crossIcon } from "~/media";
 
