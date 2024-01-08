@@ -1,6 +1,5 @@
 import type { NoSerialize } from "@builder.io/qwik";
 import { component$, noSerialize, useStore } from "@builder.io/qwik";
-import { server$ } from "@builder.io/qwik-city";
 import { attachmentIcon, crossIcon } from "~/media";
 
 interface ContactForm {
@@ -40,7 +39,7 @@ function fileToBase64(file: File): Promise<FileDto> {
 
 const mailServiceURL: string = import.meta.env.VITE_MAIL_SENDER_URL;
 
-const sendMailToService = server$(async (contactValues: ContactFormDto) => {
+const sendMailToService = async (contactValues: ContactFormDto) => {
   const reponse = await fetch(`${mailServiceURL}/mail`, {
     method: "POST",
     body: JSON.stringify(contactValues),
@@ -49,7 +48,7 @@ const sendMailToService = server$(async (contactValues: ContactFormDto) => {
     }
   });
   return reponse.json();
-});
+};
 
 const spliceAtName = (name: string, files: NoSerialize<File>[] | null | undefined): void => {
   if (files) {
