@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import Notification from "~/components/notifications/notification";
 import AboutMe from "~/components/section/about-me";
 import Contact from "~/components/section/contact";
 import DemoProjects from "~/components/section/demo-projects";

@@ -1,13 +1,18 @@
 import type { NoSerialize } from "@builder.io/qwik";
-import { component$, noSerialize, useSignal, useStore } from "@builder.io/qwik";
+import { component$, noSerialize, useSignal, useStore, $ } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
 import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
+import Notification, { NotificationProps } from "../notifications/notification";
 
 interface ContactForm {
   name: string,
   email: string,
   message: string,
   files: NoSerialize<File>[] | null | undefined,
+}
+
+interface ContactNotification extends NotificationProps {
+  display: boolean;
 }
 
 const ContactSchema = object({
@@ -62,16 +67,6 @@ function fileToBase64(file: File): Promise<FileDto> {
 
 const mailServiceURL: string = import.meta.env.VITE_MAIL_SENDER_URL;
 
-const sendMailToService = async (contactValues: ContactFormDto) => {
-  const reponse = await fetch(`${mailServiceURL}/mail`, {
-    method: "POST",
-    body: JSON.stringify(contactValues),
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-  return reponse.json();
-};
 
 const spliceAtName = (name: string, files: NoSerialize<File>[] | null | undefined): void => {
   if (files) {
@@ -120,26 +115,37 @@ const handleValidation = async (contactFormState: ContactForm): Promise<ContactF
   return [];
 }
 
-const handleSubmit = async (contactFormState: ContactForm) => {
-  const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
-  await sendMailToService(
-    {
-      name: contactFormState.name,
-      email: contactFormState.email,
-      message: contactFormState.message,
-      files: files ? await Promise.all(files) : [],
+const sendMailToService = async (contactValues: ContactFormDto) => {
+  const reponse = await fetch(`${mailServiceURL}/mail`, {
+    method: "POST",
+    body: JSON.stringify(contactValues),
+    headers: {
+      "Content-Type": "application/json",
     }
-  );
-  contactFormState.name = '';
-  contactFormState.email = '';
-  contactFormState.message = '';
-  contactFormState.files = [];
-}
+  });
+  if (!reponse.ok) {
+    throw new Error(`${reponse.status} ${reponse.statusText}`);
+  }
+  return reponse.json();
+};
 
 export default component$(() => {
 
   const contactFormState: ContactForm = useStore({ name: '', email: '', message: '', files: [] });
   const contactFormErrorState = useSignal<ContactFormError[]>([]);
+
+  const notificationState: ContactNotification = useStore({ display: false, level: 'success', title: '', message: '' });
+
+  const notificationCloseEvent = $(async () => {
+    notificationState.display = false;
+  });
+
+  const newNotification = $((notif: NotificationProps) => {
+    notificationState.level = notif.level;
+    notificationState.title = notif.title;
+    notificationState.message = notif.message;
+    notificationState.display = true;
+  });
 
   const getErrorForField = (key: keyof ContactForm) => contactFormErrorState.value.filter(fieldError => fieldError.field === key);
 
@@ -153,6 +159,39 @@ export default component$(() => {
       )
     }
   }
+
+  const handleSubmit = $(async (contactFormState: ContactForm) => {
+    try {
+      const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
+      await sendMailToService(
+        {
+          name: contactFormState.name,
+          email: contactFormState.email,
+          message: contactFormState.message,
+          files: files ? await Promise.all(files) : [],
+        }
+      );
+      newNotification({
+        level: "success",
+        title: "Contact message",
+        message: "Contact message send with success",
+      })
+      contactFormState.name = '';
+      contactFormState.email = '';
+      contactFormState.message = '';
+      contactFormState.files = [];
+    } catch (error) {
+      if (error instanceof Error) {
+        newNotification({
+          level: "error",
+          title: "Error sending contact message",
+          message: error.message,
+        });
+      } else {
+        throw error;
+      }
+    }
+  });
 
   return (
     <>
@@ -237,6 +276,14 @@ export default component$(() => {
             <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">Send</button>
           </form>
         </div>
+        {notificationState.display && (
+          <Notification
+            level={notificationState.level}
+            title={notificationState.title}
+            message={notificationState.message}
+            closeCallback={notificationCloseEvent}
+          />
+        )}
       </section>
     </>
   )
