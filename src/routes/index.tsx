@@ -1,6 +1,5 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useContextProvider, useStore } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import Notification from "~/components/notifications/notification";
 import AboutMe from "~/components/section/about-me";
 import Contact from "~/components/section/contact";
 import DemoProjects from "~/components/section/demo-projects";
@@ -10,6 +9,7 @@ import Nav from "~/components/section/nav";
 import Skills from "~/components/section/skills";
 
 export default component$(() => {
+
   return (
     <>
       <main class="relative">
@@ -26,11 +26,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Félix Vadcard Portfolio",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "description",
     },
   ],
 };

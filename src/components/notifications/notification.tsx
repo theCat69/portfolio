@@ -6,7 +6,8 @@ export interface NotificationProps {
   level: "success" | "error",
   title: string,
   message: string,
-  closeCallback?: QRL<() => void>,
+  id?: number,
+  closeCallback?: QRL<(notif: NotificationProps) => void>,
 }
 
 export default component$((notif: NotificationProps) => {
@@ -20,26 +21,29 @@ export default component$((notif: NotificationProps) => {
     setTimeout(() => {
       visible.value = false;
       if (notif.closeCallback) {
-        notif.closeCallback();
+        notif.closeCallback(notif);
       }
     }, 1000);
   });
 
   useTask$(() => {
-    setTimeout(() => closeNotif, 4000);
-  })
+    setTimeout(() => closeNotif(), 4000);
+  });
 
   return (
     <>
       {
         visible.value && (
-          <div class="w-full flex flex-row justify-center fixed bottom-0">
+          <div class={["w-full flex flex-row justify-center",
+            {
+              "psc-notification-unfold": opened.value,
+              "psc-notification-fold": !opened.value,
+            }
+          ]}>
             <div class={["flex flex-col items-center z-10 rounded-xl py-4 px-20 gap-2 relative",
               {
                 "bg-red-400": notif.level === "error",
                 "bg-green-400": notif.level === "success",
-                "psc-notification-unfold": opened.value,
-                "psc-notification-fold": !opened.value,
               }
             ]}>
               <div class="flex flex-row justify-self-end py-2 px-2 z-20 absolute right-0 top-0"

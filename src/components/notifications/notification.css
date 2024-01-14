@@ -4,13 +4,13 @@
   }
 
   to {
-    transform: translateX(1000px);
+    transform: translateX(100%);
   }
 }
 
 @keyframes notification-unfold {
   from {
-    transform: translateX(-1000px);
+    transform: translateX(-100%);
   }
 
   to {

@@ -2,17 +2,14 @@ import type { NoSerialize } from "@builder.io/qwik";
 import { component$, noSerialize, useSignal, useStore, $ } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
 import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
-import Notification, { NotificationProps } from "../notifications/notification";
+import { NotificationProps } from "../notifications/notification";
+import Notifications, { NotificationsProps } from "../notifications/notifications";
 
 interface ContactForm {
   name: string,
   email: string,
   message: string,
   files: NoSerialize<File>[] | null | undefined,
-}
-
-interface ContactNotification extends NotificationProps {
-  display: boolean;
 }
 
 const ContactSchema = object({
@@ -133,19 +130,7 @@ export default component$(() => {
 
   const contactFormState: ContactForm = useStore({ name: '', email: '', message: '', files: [] });
   const contactFormErrorState = useSignal<ContactFormError[]>([]);
-
-  const notificationState: ContactNotification = useStore({ display: false, level: 'success', title: '', message: '' });
-
-  const notificationCloseEvent = $(async () => {
-    notificationState.display = false;
-  });
-
-  const newNotification = $((notif: NotificationProps) => {
-    notificationState.level = notif.level;
-    notificationState.title = notif.title;
-    notificationState.message = notif.message;
-    notificationState.display = true;
-  });
+  const notificationStore = useStore<NotificationsProps>({ store: [] });
 
   const getErrorForField = (key: keyof ContactForm) => contactFormErrorState.value.filter(fieldError => fieldError.field === key);
 
@@ -160,6 +145,11 @@ export default component$(() => {
     }
   }
 
+  const addNotification = $((notification: NotificationProps) => {
+    notification.id = Math.floor(Math.random() * 1000000000001);
+    notificationStore.store.push(notification);
+  });
+
   const handleSubmit = $(async (contactFormState: ContactForm) => {
     try {
       const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
@@ -171,7 +161,7 @@ export default component$(() => {
           files: files ? await Promise.all(files) : [],
         }
       );
-      newNotification({
+      addNotification({
         level: "success",
         title: "Contact message",
         message: "Contact message send with success",
@@ -182,7 +172,7 @@ export default component$(() => {
       contactFormState.files = [];
     } catch (error) {
       if (error instanceof Error) {
-        newNotification({
+        addNotification({
           level: "error",
           title: "Error sending contact message",
           message: error.message,
@@ -276,14 +266,9 @@ export default component$(() => {
             <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">Send</button>
           </form>
         </div>
-        {notificationState.display && (
-          <Notification
-            level={notificationState.level}
-            title={notificationState.title}
-            message={notificationState.message}
-            closeCallback={notificationCloseEvent}
-          />
-        )}
+        <Notifications
+          store={notificationStore.store}
+        />
       </section>
     </>
   )
