@@ -1,4 +1,3 @@
-import omar from './pexels-omar.png';
 import javaIcon from './java_icon.svg';
 import springBootIcon from './spring-icon.svg';
 import angularIcon from './angular_icon.svg';
@@ -14,9 +13,9 @@ import screenPortfolio from './screen-portfolio.png';
 import screenJenkins from './screen-jenkins.png';
 import screenNotes from './screen-notes.png';
 import githubLogo from './github-mark-white.svg';
+import catToReplace from './cat_to_replace.png';
 
 export {
-  omar,
   javaIcon,
   springBootIcon,
   angularIcon,
@@ -31,5 +30,6 @@ export {
   screenPortfolio,
   screenJenkins,
   screenNotes,
-  githubLogo
+  githubLogo,
+  catToReplace,
 }
