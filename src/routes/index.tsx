@@ -1,7 +1,7 @@
-import { QRL, component$, createContextId, useContextProvider, useStore, $ } from "@builder.io/qwik";
+import { type QRL, component$, createContextId, useContextProvider, useStore, $ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { NotificationProps } from "~/components/notifications/notification";
-import Notifications, { NotificationsStore } from "~/components/notifications/notifications";
+import type { NotificationProps } from "~/components/notifications/notification";
+import Notifications, { type NotificationsStore } from "~/components/notifications/notifications";
 import AboutMe from "~/components/section/about-me";
 import Contact from "~/components/section/contact";
 import DemoProjects from "~/components/section/demo-projects";

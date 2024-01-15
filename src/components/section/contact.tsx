@@ -2,8 +2,6 @@ import type { NoSerialize } from "@builder.io/qwik";
 import { component$, noSerialize, useSignal, useStore, $, useContext } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
 import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
-import { NotificationProps } from "../notifications/notification";
-import Notifications, { NotificationsStore } from "../notifications/notifications";
 import { NotificationAddMethodContext, NotificationContext } from "~/routes";
 
 interface ContactForm {
@@ -101,7 +99,7 @@ const handleValidation = async (contactFormState: ContactForm): Promise<ContactF
     parse(ContactSchema, contactFormState);
   } catch (e) {
     if (e instanceof ValiError) {
-      return e.issues?.map((issue) => {
+      return e.issues.map((issue) => {
         return {
           field: issue.path![0].key as string,
           message: issue.message,
@@ -138,7 +136,7 @@ export default component$(() => {
 
   const displayError = (key: keyof ContactForm) => {
     const errorField = getErrorForField(key);
-    if (errorField && errorField.length >= 0) {
+    if (errorField.length >= 0) {
       return (
         <div class="font-baskerville text-red-600">
           {getErrorForField(key)[0]?.message}

@@ -1,4 +1,4 @@
-import { QRL, component$, useSignal, useStyles$, useTask$, $ } from "@builder.io/qwik";
+import { type QRL, component$, useSignal, useStyles$, useTask$, $ } from "@builder.io/qwik";
 import styles from "./notification.css?inline";
 import { crossIcon } from "~/media";
 
