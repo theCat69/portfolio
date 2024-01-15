@@ -13,7 +13,7 @@ export default component$(() => {
         </div>
         <div class="sm:w-1/2 w-full h-1/2 sm:h-full flex flex-col justify-center items-center">
           <div>
-            <img src={catToReplace} alt="omar" width={300} height={500} class="h-full w-full object-contain" />
+            <img src={catToReplace} alt="cat" width={300} height={500} class="h-full w-full object-contain" />
           </div>
         </div>
       </section>
