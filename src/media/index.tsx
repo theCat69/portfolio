@@ -1,4 +1,3 @@
-import hamburger from './hamburger.svg';
 import omar from './pexels-omar.png';
 import javaIcon from './java_icon.svg';
 import springBootIcon from './spring-icon.svg';
@@ -17,7 +16,6 @@ import screenNotes from './screen-notes.png';
 import githubLogo from './github-mark-white.svg';
 
 export {
-  hamburger,
   omar,
   javaIcon,
   springBootIcon,

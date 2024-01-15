@@ -1,0 +1,120 @@
+@keyframes menu-top-fold {
+  from {
+    transform: rotate(0deg) scale(1, 1);
+    stroke: black;
+  }
+
+  to {
+    transform: translateX(10%) rotate(-45deg) scale(1.08, 1);
+    stroke: red;
+  }
+}
+
+@keyframes menu-top-unfold {
+  from {
+    transform: translateX(10%) rotate(-45deg) scale(1.08, 1);
+    stroke: red;
+  }
+
+  to {
+    transform: rotate(0deg) scale(1, 1);
+    stroke: black;
+  }
+}
+
+@keyframes menu-bottom-fold {
+  from {
+    stroke: black;
+  }
+
+  to {
+    transform: translateX(10%) rotate(45deg) scale(1.08, 1);
+    stroke: red;
+  }
+}
+
+@keyframes menu-bottom-unfold {
+  from {
+    transform: translateX(10%) rotate(45deg) scale(1.08, 1);
+    stroke: red;
+  }
+
+  to {
+    transform: scale(1, 1);
+    stroke: black;
+  }
+}
+
+@keyframes menu-middle-fold {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes menu-middle-unfold {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sliding-menu-fold {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sliding-menu-unfold {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.psc-sliding-menu-fold {
+  animation: sliding-menu-fold 0.6s forwards;
+}
+
+.psc-sliding-menu-unfold {
+  animation: sliding-menu-unfold 0.6s forwards;
+}
+
+.psc-menu-top-fold {
+  transform-origin: bottom left;
+  animation: menu-top-fold 0.6s forwards;
+}
+
+.psc-menu-top-unfold {
+  transform-origin: bottom left;
+  animation: menu-top-unfold 0.6s forwards;
+}
+
+.psc-menu-bottom-fold {
+  animation: menu-bottom-fold 0.6s forwards;
+}
+
+.psc-menu-bottom-unfold {
+  animation: menu-bottom-unfold 0.6s forwards;
+}
+
+.psc-menu-middle-fold {
+  animation: menu-middle-fold 0.6s forwards;
+}
+
+.psc-menu-middle-unfold {
+  animation: menu-middle-unfold 0.6s forwards;
+}

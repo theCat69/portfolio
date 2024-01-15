@@ -1,12 +1,36 @@
 import type { NoSerialize } from "@builder.io/qwik";
-import { component$, noSerialize, useStore } from "@builder.io/qwik";
+import { component$, noSerialize, useSignal, useStore, $, useContext } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
+import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
+import { NotificationAddMethodContext, NotificationContext } from "~/routes";
 
 interface ContactForm {
   name: string,
   email: string,
   message: string,
   files: NoSerialize<File>[] | null | undefined,
+}
+
+const ContactSchema = object({
+  name: string([
+    minLength(1, 'Please enter your name.'),
+  ]),
+  email: string([
+    minLength(1, 'Please enter your email.'),
+    email('The email is not properly formatted.'),
+  ]),
+  message: string([
+    minLength(1, 'Please enter a message.'),
+  ]),
+  files: array(blob([
+    maxSize(2000000, 'File max size is 2Mo')
+  ])),
+})
+
+interface ContactFormError {
+  field: string,
+  message: string,
+  key?: number,
 }
 
 interface FileDto {
@@ -39,16 +63,6 @@ function fileToBase64(file: File): Promise<FileDto> {
 
 const mailServiceURL: string = import.meta.env.VITE_MAIL_SENDER_URL;
 
-const sendMailToService = async (contactValues: ContactFormDto) => {
-  const reponse = await fetch(`${mailServiceURL}/mail`, {
-    method: "POST",
-    body: JSON.stringify(contactValues),
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-  return reponse.json();
-};
 
 const spliceAtName = (name: string, files: NoSerialize<File>[] | null | undefined): void => {
   if (files) {
@@ -80,36 +94,107 @@ const cutFileNameIfTooLong = (fileName: string): string => {
   return fileName;
 }
 
+const handleValidation = async (contactFormState: ContactForm): Promise<ContactFormError[]> => {
+  try {
+    parse(ContactSchema, contactFormState);
+  } catch (e) {
+    if (e instanceof ValiError) {
+      return e.issues.map((issue) => {
+        return {
+          field: issue.path![0].key as string,
+          message: issue.message,
+          key: issue.path![1] ? issue.path![1].key as number : undefined,
+        }
+      });
+    }
+  }
+  return [];
+}
+
+const sendMailToService = async (contactValues: ContactFormDto) => {
+  const reponse = await fetch(`${mailServiceURL}/mail`, {
+    method: "POST",
+    body: JSON.stringify(contactValues),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+  if (!reponse.ok) {
+    throw new Error(`${reponse.status} ${reponse.statusText}`);
+  }
+  return reponse.json();
+};
+
 export default component$(() => {
 
   const contactFormState: ContactForm = useStore({ name: '', email: '', message: '', files: [] });
+  const contactFormErrorState = useSignal<ContactFormError[]>([]);
+  const notificationStore = useContext(NotificationContext);
+  const addNotification = useContext(NotificationAddMethodContext);
+
+  const getErrorForField = (key: keyof ContactForm) => contactFormErrorState.value.filter(fieldError => fieldError.field === key);
+
+  const displayError = (key: keyof ContactForm) => {
+    const errorField = getErrorForField(key);
+    if (errorField.length >= 0) {
+      return (
+        <div class="font-baskerville text-red-600">
+          {getErrorForField(key)[0]?.message}
+        </div>
+      )
+    }
+  }
+
+  const handleSubmit = $(async (contactFormState: ContactForm) => {
+    try {
+      const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
+      await sendMailToService(
+        {
+          name: contactFormState.name,
+          email: contactFormState.email,
+          message: contactFormState.message,
+          files: files ? await Promise.all(files) : [],
+        }
+      );
+      addNotification({
+        level: "success",
+        title: "Contact message",
+        message: "Contact message send with success",
+      }, notificationStore);
+      contactFormState.name = '';
+      contactFormState.email = '';
+      contactFormState.message = '';
+      contactFormState.files = [];
+    } catch (error) {
+      if (error instanceof Error) {
+        addNotification({
+          level: "error",
+          title: "Error sending contact message",
+          message: error.message,
+        }, notificationStore);
+      } else {
+        throw error;
+      }
+    }
+  });
 
   return (
     <>
-      <section id="contact-me" class="w-full flex flex-col justify-center min-h-screen bg-primary">
-        <div class="h-min-screen flex flex-col text-center items-center justify-center gap-16">
-          <h1 class="text-4xl text-dark-1">Contact me</h1>
+      <section id="contact-me" class="w-full flex flex-col justify-center min-h-screen bg-primary py-2">
+        <div class="h-min-screen flex flex-col text-center items-center justify-center lg:gap-8 gap-4">
+          <h1 class="text-4xl text-dark-1 font-salsa">Contact me</h1>
           <form preventdefault:submit onSubmit$={async () => {
-            const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
-            await sendMailToService(
-              {
-                name: contactFormState.name,
-                email: contactFormState.email,
-                message: contactFormState.message,
-                files: files ? await Promise.all(files) : [],
-              }
-            );
-            contactFormState.name = '';
-            contactFormState.email = '';
-            contactFormState.message = '';
-            contactFormState.files = [];
+            contactFormErrorState.value = await handleValidation(contactFormState);
+            if (contactFormErrorState.value.length === 0) {
+              handleSubmit(contactFormState);
+            }
           }}
-            class="grid grid-cols-1 justify-items-center gap-4 bg-dark-1 px-5 py-5 xl:w-1/2 md:w-3/4 w-full rounded-xl my-5"
+            class="grid grid-cols-1 justify-items-center gap-4 bg-middle px-5 py-5 xl:w-1/2 md:w-3/4 w-full rounded-xl my-5"
           >
             <div class="flex flex-row w-full gap-2">
               <div class="flex 2xl:flex-row flex-col w-full xl:gap-5 gap-2">
                 <label class="flex flex-col gap-2 items-start w-full">
-                  <span class="text-light-1 text-xl">Your name</span>
+                  <span class="text-white text-xl font-baskerville">Your name</span>
                   <input
                     value={contactFormState.name}
                     type="text"
@@ -117,9 +202,10 @@ export default component$(() => {
                     onInput$={(e) => contactFormState.name = (e.target as HTMLInputElement).value}
                     class="rounded w-64 p-2"
                   />
+                  {displayError("name")}
                 </label>
                 <label class="flex flex-col gap-2 items-start w-full">
-                  <span class="text-light-1 text-xl">Your email</span>
+                  <span class="text-white text-xl font-baskerville">Your email</span>
                   <input
                     value={contactFormState.email}
                     type="text"
@@ -127,6 +213,7 @@ export default component$(() => {
                     onInput$={(e) => contactFormState.email = (e.target as HTMLInputElement).value}
                     class="rounded w-64 p-2"
                   />
+                  {displayError("email")}
                 </label>
               </div>
               <div class="flex flex-col items-end justify-start w-full gap-2">
@@ -135,7 +222,7 @@ export default component$(() => {
                 </label>
                 <div >
                   {contactFormState.files && contactFormState.files.map((file) => (
-                    <div key={file!.name} class="text-light-1 text-xs flex flex-row justify-end items-center w-full gap-2">
+                    <div key={file!.name} class="text-white text-xs flex flex-row justify-end items-center w-full gap-2">
                       {cutFileNameIfTooLong(file!.name)}
                       <img src={crossIcon} alt="remove" width={10} height={10} class="hover:cursor-pointer"
                         onClick$={() => {
@@ -144,6 +231,9 @@ export default component$(() => {
                       />
                     </div>
                   ))}
+                  <div class="mt-2">
+                    {displayError("files")}
+                  </div>
                 </div>
               </div>
               <input
@@ -159,15 +249,16 @@ export default component$(() => {
               />
             </div>
             <label class="flex flex-col gap-2 items-start w-full">
-              <span class="text-light-1 text-xl">Your message</span>
+              <span class="text-white text-xl font-baskerville">Your message</span>
               <textarea
                 value={contactFormState.message}
                 placeholder="Type your message here ..."
                 onInput$={(e) => contactFormState.message = (e.target as HTMLInputElement).value}
                 class="rounded w-full h-64 p-2"
               ></textarea>
+              {displayError("message")}
             </label>
-            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer mt-5">Send</button>
+            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">Send</button>
           </form>
         </div>
       </section>

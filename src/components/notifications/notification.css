@@ -1,0 +1,27 @@
+@keyframes notification-fold {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes notification-unfold {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.psc-notification-fold {
+  animation: notification-fold 1s forwards;
+}
+
+.psc-notification-unfold {
+  animation: notification-unfold 1s forwards;
+}

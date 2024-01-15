@@ -22,6 +22,8 @@ module.exports = {
       fontFamily: {
         palanquin: ['Palanquin', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
+        salsa: ['Salsa', 'cursive'],
+        baskerville: ['Libre Baskerville', 'serif']
       },
       colors: {
         'primary': "#fef9f5",
@@ -43,44 +45,4 @@ module.exports = {
       }
     },
   },
-  // plugins: [
-  //   plugin(function({ addUtilities }) {
-  //     addUtilities({
-  //       '.padding': {
-  //         '@apply sm:px-16 px-8 sm:py-24 py-12': {},
-  //       },
-  //       '.allo': {
-  //         '@apply bg-black': {},
-  //       },
-  //       '.padding-x': {
-  //         '@apply sm:px-16 px-8': {},
-  //       },
-  //       '.padding-y': {
-  //         '@apply sm:py-24 py-12': {},
-  //       },
-  //       '.padding-l': {
-  //         '@apply sm:pl-16 pl-8': {},
-  //       },
-  //       '.padding-r': {
-  //         '@apply sm:pr-16 pr-8': {},
-  //       },
-  //       '.padding-t': {
-  //         '@apply sm:pt-24 pt-12': {},
-  //       },
-  //       '.padding-b': {
-  //         '@apply sm:pb-24 pb-12': {},
-  //       },
-  //       '.info-text': {
-  //         '@apply font-montserrat text-slate-gray text-lg leading-7': {},
-  //       },
-  //       '.max-container': {
-  //         'max-width': '1440px',
-  //         'margin': '0 auto',
-  //       },
-  //       '.input': {
-  //         '@apply sm:flex-1 max-sm:w-full text-base leading-normal text-slate-gray pl-5 max-sm:p-5 outline-none sm:border-none border max-sm:border-slate-gray max-sm:rounded-full': {},
-  //       },
-  //     })
-  //   })
-  // ],
 };

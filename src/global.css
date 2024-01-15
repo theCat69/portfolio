@@ -1,11 +1,16 @@
+/** 
+ * Fonts
+*/
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Salsa&display=swap');
+
 /**
  * Tailwind CSS imports
  * View the full documentation at https://tailwindcss.com
  */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /**
  * WHAT IS THIS FILE?
  *
@@ -22,11 +27,6 @@
 }
 
 @layer components {
-  .max-container {
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-
   .input {
     @apply sm:flex-1 max-sm:w-full text-base leading-normal text-black pl-5 max-sm:p-5 outline-none sm:border-none border max-sm:border-black max-sm:rounded-full;
   }
