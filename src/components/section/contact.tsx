@@ -1,9 +1,10 @@
 import type { NoSerialize } from "@builder.io/qwik";
-import { component$, noSerialize, useSignal, useStore, $ } from "@builder.io/qwik";
+import { component$, noSerialize, useSignal, useStore, $, useContext } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
 import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
 import { NotificationProps } from "../notifications/notification";
-import Notifications, { NotificationsProps } from "../notifications/notifications";
+import Notifications, { NotificationsStore } from "../notifications/notifications";
+import { NotificationAddMethodContext, NotificationContext } from "~/routes";
 
 interface ContactForm {
   name: string,
@@ -130,7 +131,8 @@ export default component$(() => {
 
   const contactFormState: ContactForm = useStore({ name: '', email: '', message: '', files: [] });
   const contactFormErrorState = useSignal<ContactFormError[]>([]);
-  const notificationStore = useStore<NotificationsProps>({ store: [] });
+  const notificationStore = useContext(NotificationContext);
+  const addNotification = useContext(NotificationAddMethodContext);
 
   const getErrorForField = (key: keyof ContactForm) => contactFormErrorState.value.filter(fieldError => fieldError.field === key);
 
@@ -144,11 +146,6 @@ export default component$(() => {
       )
     }
   }
-
-  const addNotification = $((notification: NotificationProps) => {
-    notification.id = Math.floor(Math.random() * 1000000000001);
-    notificationStore.store.push(notification);
-  });
 
   const handleSubmit = $(async (contactFormState: ContactForm) => {
     try {
@@ -165,7 +162,7 @@ export default component$(() => {
         level: "success",
         title: "Contact message",
         message: "Contact message send with success",
-      })
+      }, notificationStore);
       contactFormState.name = '';
       contactFormState.email = '';
       contactFormState.message = '';
@@ -176,7 +173,7 @@ export default component$(() => {
           level: "error",
           title: "Error sending contact message",
           message: error.message,
-        });
+        }, notificationStore);
       } else {
         throw error;
       }
@@ -266,9 +263,6 @@ export default component$(() => {
             <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">Send</button>
           </form>
         </div>
-        <Notifications
-          store={notificationStore.store}
-        />
       </section>
     </>
   )

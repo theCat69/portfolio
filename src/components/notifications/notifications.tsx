@@ -1,7 +1,8 @@
-import { component$, $ } from "@builder.io/qwik";
+import { component$, $, useContext } from "@builder.io/qwik";
 import Notification, { NotificationProps } from "./notification";
+import { NotificationContext } from "~/routes";
 
-export interface NotificationsProps {
+export interface NotificationsStore {
   store: NotificationProps[],
 }
 
@@ -17,18 +18,20 @@ export const filterInPlace = (a: NotificationProps[], id: number) => {
   a.length = j;
 }
 
-export default component$((props: NotificationsProps) => {
+export default component$(() => {
+
+  const storeContext = useContext(NotificationContext);
 
   const closeNotification = $((notif: NotificationProps) => deleteFromStore(notif.id));
 
   const deleteFromStore = $((id: number | undefined) => {
-    if (id) filterInPlace(props.store, id);
+    if (id) filterInPlace(storeContext.store, id);
   });
 
   return (
     <>
       <div class="fixed bottom-0 flex flex-col justify-center gap-2 w-full">
-        {props.store.map((notif) => (
+        {storeContext.store.map((notif) => (
           <div key={notif.id}>
             <Notification
               level={notif.level}
