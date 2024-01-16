@@ -1,0 +1,34 @@
+{
+  "contact": {
+    "name": "Name",
+    "notification": {
+      "error": {
+        "message": "Error sending contact message"
+      },
+      "success": {
+        "message": "Contact message send with success",
+        "title": "Contact message"
+      }
+    },
+    "send": "Send",
+    "validation": {
+      "email": {
+        "format": "The email is not properly formatted.",
+        "minlength": "Please enter your email."
+      },
+      "files": {
+        "maxsize": "File max size is 2Mo"
+      },
+      "message": {
+        "minlength": "Please enter a message."
+      },
+      "name": {
+        "minlength": "Please enter your name."
+      }
+    },
+    "youremail": "Your email",
+    "yourmessage": "Your message",
+    "yourmessageplaceholder": "Type your message here ...",
+    "yourname": "Your name"
+  }
+}

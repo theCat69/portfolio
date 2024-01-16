@@ -1,5 +1,5 @@
 import { component$, useSignal, useStyles$ } from "@builder.io/qwik";
-import { navLinks } from "~/constants";
+import { navLinks } from "~/constants/app";
 import styles from './nav.css?inline';
 
 export default component$(() => {
@@ -14,7 +14,7 @@ export default component$(() => {
   const isUnfold = () => isHamburgerActivated.value && !isHamburgerOpen.value;
 
   const mapNavitems = () => {
-    return navLinks.map((item) => (
+    return navLinks().map((item) => (
       <li key={item.id}>
         <a href={item.href} class="leading-normal text-lg opacity-80 hover:opacity-100 hover:drop-shadow-2xl font-baskerville">
           {item.label}
@@ -78,7 +78,6 @@ export default component$(() => {
                 </ul>
               </nav>
             )}
-
           </div>
         </div >
       </header >

@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "and": "and",
+    "desc": "Unlock the cat power and skyrocket your web dreams",
+    "hireme": "Hire me",
+    "specialized": "Specialized in",
+    "web": {
+      "after": "developer",
+      "before": "Full stack",
+      "middle": "Web"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "app": {
+    "aboutme": "About me",
+    "contactme": "Contact me",
+    "demo": "Demo projects",
+    "home": "Home",
+    "myskills": "My skills",
+    "sqldb": "SQL Databases"
+  }
+}

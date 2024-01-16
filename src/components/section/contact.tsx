@@ -1,8 +1,10 @@
 import type { NoSerialize } from "@builder.io/qwik";
 import { component$, noSerialize, useSignal, useStore, $, useContext } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
-import { email, minLength, object, string, blob, array, maxSize, parse, ValiError } from 'valibot';
-import { NotificationAddMethodContext, NotificationContext } from "~/routes";
+import { ValiError, array, blob, email, maxSize, minLength, object, parse, string } from 'valibot';
+import { NotificationAddMethodContext, NotificationContext } from "~/routes/[...lang]";
+import { inlineTranslate } from "qwik-speak";
+import type { NotificationProps } from "../notifications/notification";
 
 interface ContactForm {
   name: string,
@@ -11,21 +13,26 @@ interface ContactForm {
   files: NoSerialize<File>[] | null | undefined,
 }
 
-const ContactSchema = object({
-  name: string([
-    minLength(1, 'Please enter your name.'),
-  ]),
-  email: string([
-    minLength(1, 'Please enter your email.'),
-    email('The email is not properly formatted.'),
-  ]),
-  message: string([
-    minLength(1, 'Please enter a message.'),
-  ]),
-  files: array(blob([
-    maxSize(2000000, 'File max size is 2Mo')
-  ])),
-})
+const contactSchema = () => {
+  const t = inlineTranslate();
+
+  return object({
+    name: string([
+      minLength(1, t('contact.validation.name.minlength@@Please enter your name.')),
+    ]),
+    email: string([
+      minLength(1, t('contact.validation.email.minlength@@Please enter your email.')),
+      email(t('contact.validation.email.format@@The email is not properly formatted.')),
+    ]),
+    message: string([
+      minLength(1, t('contact.validation.message.minlength@@Please enter a message.')),
+    ]),
+    files: array(blob([
+      maxSize(2000000, t('contact.validation.files.maxsize@@File max size is 2Mo'))
+    ])),
+  })
+};
+
 
 interface ContactFormError {
   field: string,
@@ -96,7 +103,7 @@ const cutFileNameIfTooLong = (fileName: string): string => {
 
 const handleValidation = async (contactFormState: ContactForm): Promise<ContactFormError[]> => {
   try {
-    parse(ContactSchema, contactFormState);
+    parse(contactSchema(), contactFormState);
   } catch (e) {
     if (e instanceof ValiError) {
       return e.issues.map((issue) => {
@@ -109,6 +116,24 @@ const handleValidation = async (contactFormState: ContactForm): Promise<ContactF
     }
   }
   return [];
+}
+
+const successNotification = async (): Promise<NotificationProps> => {
+  const t = inlineTranslate();
+  return {
+    level: "success",
+    title: t('contact.notification.success.title@@Contact message'),
+    message: t('contact.notification.success.message@@Contact message send with success'),
+  }
+};
+
+const errorNotification = async (errorMessage: string): Promise<NotificationProps> => {
+  const t = inlineTranslate();
+  return {
+    level: "error",
+    title: t('contact.notification.error.message@@Error sending contact message'),
+    message: errorMessage,
+  }
 }
 
 const sendMailToService = async (contactValues: ContactFormDto) => {
@@ -126,6 +151,8 @@ const sendMailToService = async (contactValues: ContactFormDto) => {
 };
 
 export default component$(() => {
+
+  const t = inlineTranslate();
 
   const contactFormState: ContactForm = useStore({ name: '', email: '', message: '', files: [] });
   const contactFormErrorState = useSignal<ContactFormError[]>([]);
@@ -145,6 +172,7 @@ export default component$(() => {
     }
   }
 
+
   const handleSubmit = $(async (contactFormState: ContactForm) => {
     try {
       const files = contactFormState.files?.map(async (file) => await fileToBase64(file as File));
@@ -156,33 +184,26 @@ export default component$(() => {
           files: files ? await Promise.all(files) : [],
         }
       );
-      addNotification({
-        level: "success",
-        title: "Contact message",
-        message: "Contact message send with success",
-      }, notificationStore);
+      addNotification(await successNotification(), notificationStore);
       contactFormState.name = '';
       contactFormState.email = '';
       contactFormState.message = '';
       contactFormState.files = [];
     } catch (error) {
       if (error instanceof Error) {
-        addNotification({
-          level: "error",
-          title: "Error sending contact message",
-          message: error.message,
-        }, notificationStore);
+        addNotification(await errorNotification(error.message), notificationStore);
       } else {
         throw error;
       }
     }
   });
 
+
   return (
     <>
       <section id="contact-me" class="w-full flex flex-col justify-center min-h-screen bg-primary py-2">
         <div class="h-min-screen flex flex-col text-center items-center justify-center lg:gap-8 gap-4">
-          <h1 class="text-4xl text-dark-1 font-salsa">Contact me</h1>
+          <h1 class="text-4xl text-dark-1 font-salsa">{t('app.contactme')}</h1>
           <form preventdefault:submit onSubmit$={async () => {
             contactFormErrorState.value = await handleValidation(contactFormState);
             if (contactFormErrorState.value.length === 0) {
@@ -194,18 +215,18 @@ export default component$(() => {
             <div class="flex flex-row w-full gap-2">
               <div class="flex 2xl:flex-row flex-col w-full xl:gap-5 gap-2">
                 <label class="flex flex-col gap-2 items-start w-full">
-                  <span class="text-white text-xl font-baskerville">Your name</span>
+                  <span class="text-white text-xl font-baskerville">{t('contact.yourname@@Your name')}</span>
                   <input
                     value={contactFormState.name}
                     type="text"
-                    placeholder="Name"
+                    placeholder={t('contact.name@@Name')}
                     onInput$={(e) => contactFormState.name = (e.target as HTMLInputElement).value}
                     class="rounded w-64 p-2"
                   />
                   {displayError("name")}
                 </label>
                 <label class="flex flex-col gap-2 items-start w-full">
-                  <span class="text-white text-xl font-baskerville">Your email</span>
+                  <span class="text-white text-xl font-baskerville">{t('contact.youremail@@Your email')}</span>
                   <input
                     value={contactFormState.email}
                     type="text"
@@ -249,16 +270,16 @@ export default component$(() => {
               />
             </div>
             <label class="flex flex-col gap-2 items-start w-full">
-              <span class="text-white text-xl font-baskerville">Your message</span>
+              <span class="text-white text-xl font-baskerville">{t('contact.yourmessage@@Your message')}</span>
               <textarea
                 value={contactFormState.message}
-                placeholder="Type your message here ..."
+                placeholder={t('contact.yourmessageplaceholder@@Type your message here ...')}
                 onInput$={(e) => contactFormState.message = (e.target as HTMLInputElement).value}
                 class="rounded w-full h-64 p-2"
               ></textarea>
               {displayError("message")}
             </label>
-            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">Send</button>
+            <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">{t('contact.send@@Send')}</button>
           </form>
         </div>
       </section>

@@ -1,0 +1,30 @@
+{
+  "demo": {
+    "card": {
+      "bfjvm": {
+        "desc": "I wanted to learn Rust, I am a Windows user, I love CLI tools but I dislike GitBash a lot (it is terribly slow). I wanted something similar to sdkman but compatible with windows and with good performance. Thus I made this project.",
+        "title": "BF-J-VM"
+      },
+      "digitalpiano": {
+        "desc": "A simple digital piano. You can interact with it using your keyboard or a touchable screen. This project was made over a rainy week-end using Vite and TS.",
+        "title": "Piano digital"
+      },
+      "javaargparser": {
+        "desc": "This is a solution to an excercise made in few hours. The subject was Make an easy to use CLI argument parser to be used as a library\". This is my take on it.\"",
+        "title": "Java argument parser"
+      },
+      "jenkins": {
+        "desc": "Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest accounrt (Guest/Guest).",
+        "title": "Instance jenkins"
+      },
+      "mailsenderapp": {
+        "desc": "A simple SpringBoot Java project I made to send emails (it is used by this website in the contact section). I used this projects as an example projects to show how to use DDD and correct testing configuration in a spring boot project.",
+        "title": "Mail sender app"
+      },
+      "portfolio": {
+        "desc": "This is a reference to this website. Made with Qwik(the brand new framework from the Angular team) and Tailwind.",
+        "title": "Portfolio"
+      }
+    }
+  }
+}

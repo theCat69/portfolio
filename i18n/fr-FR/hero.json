@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "and": "et",
+    "desc": "Révéler le pouvoir du chat et réaliser vos rêves sur le web",
+    "hireme": "Recrutez moi",
+    "specialized": "Specializé en",
+    "web": {
+      "after": "full stack",
+      "before": "Dévellopeur",
+      "middle": "Web"
+    }
+  }
+}
