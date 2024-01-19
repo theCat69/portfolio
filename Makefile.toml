@@ -6,6 +6,17 @@ args = ["clean"]
 command = "cargo"
 args = ["build"]
 
+[tasks.node-unit-test]
+script_runner = "@shell" 
+script = '''
+npm run test.unit
+'''
+
+[tasks.unit-test]
+dependencies = ["node-unit-test"]
+command = "cargo"
+args = ["test"]
+
 [tasks.build-release]
 command = "cargo"
 args = ["build", "-r"]

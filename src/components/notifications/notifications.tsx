@@ -22,10 +22,8 @@ export default component$(() => {
 
   const storeContext = useContext(NotificationContext);
 
-  const closeNotification = $((notif: NotificationProps) => deleteFromStore(notif.id));
-
-  const deleteFromStore = $((id: number | undefined) => {
-    if (id) filterInPlace(storeContext.store, id);
+  const closeNotification = $((notif: NotificationProps) => {
+    if (notif.id) filterInPlace(storeContext.store, notif.id);
   });
 
   return (

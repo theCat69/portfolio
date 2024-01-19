@@ -19,6 +19,11 @@ pipeline {
         }
       }
     }
+    stage('Test') {
+      steps {
+        sh "cargo make unit-test"
+      }
+    }
     stage('Deploy') {
       steps {
         script {
