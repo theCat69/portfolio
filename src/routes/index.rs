@@ -3,7 +3,7 @@ use rocket::request;
 use rocket::{response::NamedFile, Outcome, Request};
 use std::{convert::Infallible, io};
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, PartialEq)]
 pub enum SupportedLangages {
     EnUs,
     FrFr,
@@ -70,7 +70,6 @@ impl<'a, 'r> request::FromRequest<'a, 'r> for SupportedLangages {
             Some(accept_lang) => Outcome::Success(
                 SupportedLangages::from_accepted_language_header_value(accept_lang),
             ),
-            // token does not exist
             None => Outcome::Success(SupportedLangages::default()),
         }
     }
@@ -79,4 +78,49 @@ impl<'a, 'r> request::FromRequest<'a, 'r> for SupportedLangages {
 #[get("/")]
 pub fn index(used_lang: SupportedLangages) -> io::Result<NamedFile> {
     NamedFile::open(used_lang.as_file_path())
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::routes::index::SupportedLangages;
+
+    #[test]
+    fn from_accepted_langage_header_en_us_test() {
+        // given
+        let accept_lang = "en-US,en;q=0.8,fr-FR;q=0.5";
+        //when
+        let result = SupportedLangages::from_accepted_language_header_value(accept_lang);
+        //then
+        assert_eq!(result, SupportedLangages::EnUs);
+    }
+
+    #[test]
+    fn from_accepted_langage_header_fr_fr_test() {
+        // given
+        let accept_lang = "fr-FR,en;q=0.8,en-EN;q=0.5";
+        //when
+        let result = SupportedLangages::from_accepted_language_header_value(accept_lang);
+        //then
+        assert_eq!(result, SupportedLangages::FrFr);
+    }
+
+    #[test]
+    fn from_accepted_langage_header_default_test() {
+        // given
+        let accept_lang = "de-DE,de;q=0.8,it-IT;q=0.5";
+        //when
+        let result = SupportedLangages::from_accepted_language_header_value(accept_lang);
+        //then
+        assert_eq!(result, SupportedLangages::EnEn);
+    }
+
+    #[test]
+    fn from_accepted_langage_header_from_lang_test() {
+        // given
+        let accept_lang = "de-DE,fr;q=0.8,it-IT;q=0.5";
+        //when
+        let result = SupportedLangages::from_accepted_language_header_value(accept_lang);
+        //then
+        assert_eq!(result, SupportedLangages::FrFr);
+    }
 }

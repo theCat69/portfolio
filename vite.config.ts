@@ -6,9 +6,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(() => {
   return {
-    build: {
-      minify: false // To inspect production files
-    },
+    // build: {
+    //   minify: false // To inspect production files
+    // },
     plugins: [qwikCity(),
     qwikVite(),
     qwikSpeakInline({
