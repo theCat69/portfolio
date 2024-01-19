@@ -1,0 +1,38 @@
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
+
+[tasks.build]
+command = "cargo"
+args = ["build"]
+
+[tasks.build-release]
+command = "cargo"
+args = ["build", "-r"]
+
+[tasks.build-node]
+script_runner = "@shell" 
+script = '''
+npm run build.ci
+'''
+
+[tasks.copy-static-file]
+script_runner = "@shell" 
+script = '''
+rm -rf target/release/dist
+cp -R dist target/release/dist/
+'''
+
+[tasks.release]
+dependencies = [
+  "build-node",
+  "build-release",
+  "copy-static-file"
+]
+
+[tasks.dev]
+dependencies = [
+  "build-node"
+]
+command = "cargo"
+args = ["run"]

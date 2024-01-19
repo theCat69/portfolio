@@ -1,0 +1,13 @@
+[Unit]
+Description=Portfolio rocket app
+After=syslog.target
+
+[Service]
+Type=simple
+User=portfolio
+WorkingDirectory=/home/portfolio/app
+ExecStart=/home/portfolio/app/fvd_portfolio
+
+[Install]
+WantedBy=multi-user.target
+

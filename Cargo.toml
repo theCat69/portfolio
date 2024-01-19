@@ -1,0 +1,8 @@
+[package]
+name = "fvd_portfolio"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.4.10", features = ["tls"] }
+itertools = "0.12.0"
