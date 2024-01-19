@@ -1,7 +1,8 @@
 import { component$ } from "@builder.io/qwik";
-import type { Skill } from "~/constants";
+import type { Skill } from "~/constants/skills";
 
 export default component$((props: Skill) => {
+
   return (
     <>
       <div class="min-h-full flex flex-col bg-primary relative rounded-xl">

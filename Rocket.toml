@@ -1,0 +1,12 @@
+[development]
+address = "localhost"
+port = 8000
+log = "normal"
+secret_key = "LCrDYCOqKUjiLKE0Rf+9HAsrzfiZXZVVjRfQ2UddvHo="
+tls = { certs = "tls/localhost.pem", key = "tls/localhost.key" }
+
+[production]
+address = "0.0.0.0"
+port = 8086
+log = "critical"
+secret_key = "Wa9qn3ctYXz31yOa9MGXkoADJMio24XyTVKgJhvi9H8="

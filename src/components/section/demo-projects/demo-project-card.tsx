@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import type { DemoProject } from "~/constants";
+import type { DemoProject } from "~/constants/demo";
 import { githubLogo } from "~/media";
 
 export default component$((props: DemoProject) => {

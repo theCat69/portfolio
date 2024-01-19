@@ -1,6 +1,6 @@
 import { component$, $, useContext } from "@builder.io/qwik";
 import Notification, { type NotificationProps } from "./notification";
-import { NotificationContext } from "~/routes";
+import { NotificationContext } from "~/routes/[...lang]";
 
 export interface NotificationsStore {
   store: NotificationProps[],

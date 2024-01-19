@@ -1,0 +1,34 @@
+{
+  "contact": {
+    "name": "nom",
+    "notification": {
+      "error": {
+        "message": "Une erreur est survenue lors de l'envoie du message de contact"
+      },
+      "success": {
+        "message": "Le message de contact a été envoyé avec succès",
+        "title": "Message de contact"
+      }
+    },
+    "send": "Envoyer",
+    "validation": {
+      "email": {
+        "format": "L'email n'a pas le format attendu.",
+        "minlength": "S'il vous plait entrer votre email."
+      },
+      "files": {
+        "maxsize": "La taille maximale des fichiers est de 2Mo."
+      },
+      "message": {
+        "minlength": "S'il vous plait entrer votre message."
+      },
+      "name": {
+        "minlength": "S'il vous plait entrer votre nom."
+      }
+    },
+    "youremail": "Votre email",
+    "yourmessage": "Votre message",
+    "yourmessageplaceholder": "Taper votre message ici ...",
+    "yourname": "Votre nom"
+  }
+}

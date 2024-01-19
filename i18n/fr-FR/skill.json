@@ -1,0 +1,29 @@
+{
+  "skill": {
+    "card": {
+      "angular": {
+        "desc": "Angular a été le premier framework node que j'ai pu rencontrer pendant ma carriere. Je l'ai utilisé sur beaucoup de projets en entreprise ou pour des petits projets personel.",
+        "title": "Angular"
+      },
+      "formation": {
+        "desc": "I love teaching and sharing knowledge with others. In my most recents work experience I often took the role of a technical reference for my coworker. That helped me to gain skills in teaching others, writing exercise or presentations.",
+        "title": "Formation"
+      },
+      "java": {
+        "desc": "Java is my main focus for more than 5 years. I had the chance to work on Java versions 6, 8, 11 and 17. I mastered technologies like Spring, Spring Boot, Maven, Hibernate and JUnit.",
+        "title": "Java"
+      },
+      "jenkins": {
+        "desc": "Jenkins was the main tool I used for CI pipelines. From generic pipeline using libraries to project specific CI task, I experienced a wide range of feature from Jenkins.",
+        "title": "CI/CD Jenkins"
+      },
+      "sqldb": {
+        "desc": "All the projects i worked on were using SQL Databases. I had the chance to work with Oracle database, DB2 as400, Postgres and MariaDB. I wrote a large range of SQL scripts from simple select to complicated transactional procedures."
+      },
+      "testing": {
+        "desc": "I always had a special care for testing. Testing is a complicated topic that should be thinked and rethinked during the whole lifetime of a project. Unit tests, Integration tests and end to end testing all have there advantages and inconvinient.",
+        "title": "Testing"
+      }
+    }
+  }
+}

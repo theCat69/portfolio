@@ -39,3 +39,11 @@ lerna-debug.log*
 # Yarn
 .yarn/*
 !.yarn/releases
+
+# Speak
+/tmp
+
+
+# Added by cargo
+.cargo
+/target
