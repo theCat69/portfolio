@@ -47,3 +47,7 @@ lerna-debug.log*
 # Added by cargo
 .cargo
 /target
+
+# E2E
+e2e.log
+e2e_PID.txt

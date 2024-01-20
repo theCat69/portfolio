@@ -1,3 +1,9 @@
+[env]
+PORTFOLIO_E2E_STARTED = "false"
+
+[config]
+on_error_task = "catch"
+
 [tasks.clean]
 command = "cargo"
 args = ["clean"]
@@ -34,6 +40,87 @@ rm -rf target/release/dist
 cp -R dist target/release/dist/
 '''
 
+[tasks.launch-staging]
+linux_alias = "launch-staging-linux"
+mac_alias = "launch-staging-linux"
+windows_alias = "launch-staging-windows"
+
+[tasks.set-e2e-started]
+env = { "PORTFOLIO_E2E_STARTED" = "true" }
+
+[tasks.set-stage-env]
+env = { ROCKET_ENV = "stage" }
+
+[tasks.launch-staging-linux]
+dependencies = [ "set-stage-env" ]
+script_runner = "@shell" 
+script = '''
+cd ./target/release
+nohup ./fvd_portfolio > ../../e2e.log 2>&1 &
+echo $! > ../../e2e_PID.txt
+cd ../..
+'''
+
+[tasks.launch-staging-windows]
+dependencies = [ "set-stage-env" ]
+script_runner = "@shell" 
+script = '''
+cd ./target/release
+start /min ./fvd_portfolio.exe 
+echo $! > ../../e2e_PID.txt
+cd ../..
+'''
+
+[tasks.cleanup-env-e2e]
+env = { ROCKET_ENV = "",  "PORTFOLIO_E2E_STARTED" = "false" }
+
+[tasks.stop-staging]
+linux_alias = "stop-staging-linux"
+mac_alias = "stop-staging-linux"
+windows_alias = "stop-staging-windows"
+
+[tasks.stop-staging-linux]
+conditions = { env_true = ["PORTFOLIO_E2E_STARTED"] }
+script_runner = "@shell" 
+script = '''
+kill $(cat e2e_PID.txt)
+'''
+
+[tasks.stop-staging-windows]
+conditions = { env_true = ["PORTFOLIO_E2E_STARTED"] }
+script_runner = "@shell" 
+script = '''
+wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
+'''
+
+[tasks.run-e2e-test]
+command = "cargo"
+args = [ 
+  "test",
+  "e2e",
+  "--",
+  "--ignored"
+]
+
+[tasks.setup-e2e]
+dependencies = [
+  "launch-staging",
+  "set-e2e-started"
+]
+
+[tasks.tear-down-e2e]
+dependencies = [
+  "stop-staging",
+  "cleanup-env-e2e"
+]
+
+[tasks.e2e]
+dependencies = [
+  "setup-e2e",
+  "run-e2e-test",
+  "tear-down-e2e"
+]
+
 [tasks.release]
 dependencies = [
   "build-node",
@@ -42,8 +129,11 @@ dependencies = [
 ]
 
 [tasks.dev]
-dependencies = [
-  "build-node"
-]
+dependencies = ["build-node"]
 command = "cargo"
 args = ["run"]
+
+[tasks.catch]
+dependencies = [
+  "tear-down-e2e"
+]

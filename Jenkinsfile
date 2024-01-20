@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        script{
+        script {
           if(env.GIT_BRANCH == "main") {
             sh "cargo make clean"
           }
@@ -22,6 +22,11 @@ pipeline {
     stage('Test') {
       steps {
         sh "cargo make unit-test"
+      }
+    }
+    stage('E2E') {
+      steps {
+        sh "cargo make e2e"
       }
     }
     stage('Deploy') {
