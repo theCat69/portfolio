@@ -1,7 +1,6 @@
 use itertools::Itertools;
-use rocket::request;
-use rocket::{response::NamedFile, Outcome, Request};
-use std::{convert::Infallible, io};
+use rocket::{fs::NamedFile, http::Status, outcome::Outcome, request, Request};
+use std::convert::Infallible;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum SupportedLangages {
@@ -61,10 +60,11 @@ impl SupportedLangages {
     }
 }
 
-impl<'a, 'r> request::FromRequest<'a, 'r> for SupportedLangages {
+#[rocket::async_trait]
+impl<'a> request::FromRequest<'a> for SupportedLangages {
     type Error = Infallible;
 
-    fn from_request(request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
+    async fn from_request(request: &'a Request<'_>) -> request::Outcome<Self, Self::Error> {
         let cookies = request.cookies();
         let lang_cookie = cookies.get("lang");
         match lang_cookie {
@@ -79,7 +79,7 @@ impl<'a, 'r> request::FromRequest<'a, 'r> for SupportedLangages {
 
 fn request_from_header(
     request: &Request<'_>,
-) -> Outcome<SupportedLangages, (rocket::http::Status, Infallible), ()> {
+) -> Outcome<SupportedLangages, (rocket::http::Status, Infallible), Status> {
     let accept_language = request.headers().get_one("accept-language");
     match accept_language {
         Some(accept_lang) => Outcome::Success(
@@ -90,8 +90,8 @@ fn request_from_header(
 }
 
 #[get("/")]
-pub fn index(used_lang: SupportedLangages) -> io::Result<NamedFile> {
-    NamedFile::open(used_lang.as_file_path())
+pub async fn index(used_lang: SupportedLangages) -> Option<NamedFile> {
+    NamedFile::open(used_lang.as_file_path()).await.ok()
 }
 
 #[cfg(test)]

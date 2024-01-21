@@ -1,16 +1,17 @@
-[development]
-address = "localhost"
+[default]
+address = "127.0.0.1"
 port = 8000
-log = "normal"
-tls = { certs = "tls/localhost.pem", key = "tls/localhost.key" }
+log_level = "normal"
 
-[staging]
-address = "localhost"
+[debug.tls]
+certs = "tls/localhost.pem"
+key = "tls/localhost.key" 
+
+[e2e]
 port = 8001
-log = "normal"
 
-[production]
+[release]
 address = "0.0.0.0"
 port = 8086
-log = "critical"
+log_level = "critical"
 secret_key = "Wa9qn3ctYXz31yOa9MGXkoADJMio24XyTVKgJhvi9H8="
