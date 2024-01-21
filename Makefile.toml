@@ -35,7 +35,7 @@ cp -R dist target/release/dist/
 '''
 
 [tasks.set-e2e-env]
-env = { "ROCKET_ENV" = "stage" }
+env = { "ROCKET_PROFILE" = "e2e" }
 
 [tasks.launch-staging]
 linux_alias = "launch-staging-linux"
@@ -61,12 +61,12 @@ cd ..\..
 
 [tasks.stop-staging-linux]
 script = '''
-# kill $(cat e2e_PID.txt)
+kill $(cat e2e_PID.txt)
 '''
 
 [tasks.stop-staging-windows]
 script = '''
-# wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
+wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
 '''
 
 [tasks.run-e2e-test]

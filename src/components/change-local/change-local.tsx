@@ -11,7 +11,6 @@ export default component$(() => {
 
   const showAvailable = useSignal(false);
 
-
   return (
     <>
       <div class="flex flex-row justify-center">
