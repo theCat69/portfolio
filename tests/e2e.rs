@@ -81,3 +81,38 @@ fn e2e_website_is_up_fr_fr() {
     let str_content = String::from_utf8_lossy(&contents.0);
     assert!(str_content.contains("<html lang=\"fr-FR\""));
 }
+
+#[test]
+#[ignore]
+fn e2e_website_use_cookies_first() {
+    // given
+    let mut easy = set_up_easy();
+    let mut headers = List::new();
+    headers
+        .append("accept-language: fr-FR;en-US,fr;en-EN,p=0.8")
+        .unwrap();
+    easy.http_headers(headers).unwrap();
+    easy.cookie("lang=en-US").unwrap();
+    //when
+    easy.perform().unwrap();
+    // then
+    assert_eq!(easy.response_code().unwrap(), 200);
+    let contents = easy.get_ref();
+    let str_content = String::from_utf8_lossy(&contents.0);
+    assert!(str_content.contains("<html lang=\"en-US\""));
+}
+
+#[test]
+#[ignore]
+fn e2e_website_use_cookies_first_fr_fr() {
+    // given
+    let mut easy = set_up_easy();
+    easy.cookie("lang=fr-FR").unwrap();
+    //when
+    easy.perform().unwrap();
+    // then
+    assert_eq!(easy.response_code().unwrap(), 200);
+    let contents = easy.get_ref();
+    let str_content = String::from_utf8_lossy(&contents.0);
+    assert!(str_content.contains("<html lang=\"fr-FR\""));
+}

@@ -10,7 +10,6 @@ import Hero from "~/components/section/hero";
 import Nav from "~/components/section/nav";
 import Skills from "~/components/section/skills";
 import { config } from '../../speak-config';
-import ChangeLocal from "~/components/change-local/change-local";
 
 export const NotificationContext = createContextId<NotificationsStore>(
   'docs.notification-context'

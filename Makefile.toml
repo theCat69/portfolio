@@ -61,12 +61,12 @@ cd ..\..
 
 [tasks.stop-staging-linux]
 script = '''
-kill $(cat e2e_PID.txt)
+# kill $(cat e2e_PID.txt)
 '''
 
 [tasks.stop-staging-windows]
 script = '''
-wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
+# wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
 '''
 
 [tasks.run-e2e-test]
