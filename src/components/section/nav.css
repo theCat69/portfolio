@@ -68,21 +68,29 @@
 @keyframes sliding-menu-fold {
   from {
     transform: translateX(100%);
+    visibility: hidden;
   }
 
   to {
     transform: translateX(0);
+    visibility: visible;
   }
 }
 
 @keyframes sliding-menu-unfold {
   from {
     transform: translateX(0);
+    visibility: visible;
   }
 
   to {
     transform: translateX(100%);
+    visibility: hidden;
   }
+}
+
+#side-menu {
+  visibility: hidden;
 }
 
 .psc-sliding-menu-fold {

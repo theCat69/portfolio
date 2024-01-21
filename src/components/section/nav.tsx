@@ -8,7 +8,6 @@ export default component$(() => {
 
   const isHamburgerOpen = useSignal(false);
   const isHamburgerActivated = useSignal(false);
-  const isSlidingVisible = useSignal(false);
 
   const isFold = () => isHamburgerActivated.value && isHamburgerOpen.value;
   const isUnfold = () => isHamburgerActivated.value && !isHamburgerOpen.value;
@@ -38,11 +37,6 @@ export default component$(() => {
               <svg width="54" height="44" viewBox="0 0 54 44" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="hover:cursor-pointer w-6 h-6"
                 onClick$={() => {
-                  if (!isSlidingVisible.value) {
-                    isSlidingVisible.value = true;
-                  } else {
-                    setTimeout(() => isSlidingVisible.value = false, 600);
-                  }
                   isHamburgerOpen.value = !isHamburgerOpen.value;
                   isHamburgerActivated.value = true;
                 }}>
@@ -66,18 +60,16 @@ export default component$(() => {
                 />
               </svg>
             </div>
-            {isSlidingVisible.value && (
-              <nav class={["flex flex-col justify-between items-center bg-dark-1 p-4 rounded-xl -padding-x absolute top-20 right-0",
-                {
-                  'psc-sliding-menu-unfold': isUnfold(),
-                  'psc-sliding-menu-fold': isFold()
-                }
-              ]}>
-                <ul class="flex-1 flex justify-center flex-col items-center gap-16 text-white">
-                  {mapNavitems()}
-                </ul>
-              </nav>
-            )}
+            <nav id="side-menu" class={["flex flex-col justify-between items-center bg-dark-1 p-4 rounded-xl -padding-x absolute top-20 right-0",
+              {
+                'psc-sliding-menu-unfold': isUnfold(),
+                'psc-sliding-menu-fold': isFold()
+              }
+            ]}>
+              <ul class="flex-1 flex justify-center flex-col items-center gap-16 text-white">
+                {mapNavitems()}
+              </ul>
+            </nav>
           </div>
         </div >
       </header >
