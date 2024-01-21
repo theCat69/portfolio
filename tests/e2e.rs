@@ -1,3 +1,5 @@
+use std::env;
+
 use curl::easy::{Easy2, Handler, List, WriteError};
 
 struct Collector(Vec<u8>);
@@ -9,14 +11,22 @@ impl Handler for Collector {
     }
 }
 
-fn get_website_url() -> &'static str {
-    "http://localhost:8001"
+fn get_website_url() -> String {
+    let port = get_rocket_port();
+    format!("http://localhost:{port}")
+}
+
+fn get_rocket_port() -> String {
+    match env::var_os("ROCKET_PORT") {
+        Some(port) => port.to_string_lossy().to_string(),
+        None => "8001".to_owned(),
+    }
 }
 
 fn set_up_easy() -> Easy2<Collector> {
     let mut easy = Easy2::new(Collector(Vec::new()));
     easy.get(true).unwrap();
-    easy.url(get_website_url()).unwrap();
+    easy.url(&get_website_url()).unwrap();
     easy
 }
 
@@ -50,7 +60,7 @@ fn e2e_website_is_up_en_us() {
     assert_eq!(easy.response_code().unwrap(), 200);
     let contents = easy.get_ref();
     let str_content = String::from_utf8_lossy(&contents.0);
-    assert!(str_content.contains("<html lang=\"en-EN\""));
+    assert!(str_content.contains("<html lang=\"en-US\""));
 }
 
 #[test]

@@ -1,9 +1,3 @@
-[env]
-PORTFOLIO_E2E_STARTED = "false"
-
-[config]
-on_error_task = "catch"
-
 [tasks.clean]
 command = "cargo"
 args = ["clean"]
@@ -40,20 +34,16 @@ rm -rf target/release/dist
 cp -R dist target/release/dist/
 '''
 
+[tasks.set-e2e-env]
+env = { "ROCKET_ENV" = "stage" }
+
 [tasks.launch-staging]
 linux_alias = "launch-staging-linux"
 mac_alias = "launch-staging-linux"
 windows_alias = "launch-staging-windows"
 
-[tasks.set-e2e-started]
-env = { "PORTFOLIO_E2E_STARTED" = "true" }
-
-[tasks.set-stage-env]
-env = { ROCKET_ENV = "stage" }
-
 [tasks.launch-staging-linux]
-dependencies = [ "set-stage-env" ]
-script_runner = "@shell" 
+dependencies = [ "set-e2e-env" ]
 script = '''
 cd ./target/release
 nohup ./fvd_portfolio > ../../e2e.log 2>&1 &
@@ -62,33 +52,19 @@ cd ../..
 '''
 
 [tasks.launch-staging-windows]
-dependencies = [ "set-stage-env" ]
-script_runner = "@shell" 
+dependencies = [ "set-e2e-env" ]
 script = '''
-cd ./target/release
-start /min ./fvd_portfolio.exe 
-echo $! > ../../e2e_PID.txt
-cd ../..
+cd .\target\release
+start /min .\fvd_portfolio.exe > ..\..\e2e.log 
+cd ..\..
 '''
 
-[tasks.cleanup-env-e2e]
-env = { ROCKET_ENV = "",  "PORTFOLIO_E2E_STARTED" = "false" }
-
-[tasks.stop-staging]
-linux_alias = "stop-staging-linux"
-mac_alias = "stop-staging-linux"
-windows_alias = "stop-staging-windows"
-
 [tasks.stop-staging-linux]
-conditions = { env_true = ["PORTFOLIO_E2E_STARTED"] }
-script_runner = "@shell" 
 script = '''
 kill $(cat e2e_PID.txt)
 '''
 
 [tasks.stop-staging-windows]
-conditions = { env_true = ["PORTFOLIO_E2E_STARTED"] }
-script_runner = "@shell" 
 script = '''
 wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
 '''
@@ -102,38 +78,23 @@ args = [
   "--ignored"
 ]
 
-[tasks.setup-e2e]
-dependencies = [
-  "launch-staging",
-  "set-e2e-started"
-]
+# I think it's a bug but i can't have a platform specific cleanup task
+# if i don't duplicate the original task
+[tasks.e2e-windows]
+run_task = { name = ["launch-staging", "run-e2e-test"], fork = true, cleanup_task = "stop-staging-windows" }
 
-[tasks.tear-down-e2e]
-dependencies = [
-  "stop-staging",
-  "cleanup-env-e2e"
-]
+[tasks.e2e-linux]
+run_task = { name = ["launch-staging", "run-e2e-test"], fork = true, cleanup_task = "stop-staging-linux" }
 
 [tasks.e2e]
-dependencies = [
-  "setup-e2e",
-  "run-e2e-test",
-  "tear-down-e2e"
-]
+linux_alias = "e2e-linux"
+mac_alias = "e2e-linux"
+windows_alias = "e2e-windows"
 
 [tasks.release]
-dependencies = [
-  "build-node",
-  "build-release",
-  "copy-static-file"
-]
+run_task = { name = ["build-node", "build-release", "copy-static-file"] }
 
 [tasks.dev]
 dependencies = ["build-node"]
 command = "cargo"
 args = ["run"]
-
-[tasks.catch]
-dependencies = [
-  "tear-down-e2e"
-]
