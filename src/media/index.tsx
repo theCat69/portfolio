@@ -14,6 +14,9 @@ import screenJenkins from './screen-jenkins.png';
 import screenNotes from './screen-notes.png';
 import githubLogo from './github-mark-white.svg';
 import catToReplace from './cat_to_replace.png';
+import frFlag from './FR-flag.svg';
+import usFlag from './US-flag.svg';
+import ukFlag from './UK-flag.svg';
 
 export {
   javaIcon,
@@ -32,4 +35,7 @@ export {
   screenNotes,
   githubLogo,
   catToReplace,
+  frFlag,
+  usFlag,
+  ukFlag,
 }

@@ -1,6 +1,7 @@
 import { component$, useSignal, useStyles$ } from "@builder.io/qwik";
 import { navLinks } from "~/constants/app";
 import styles from './nav.css?inline';
+import ChangeLocal from "../change-local/change-local";
 
 export default component$(() => {
 
@@ -25,6 +26,9 @@ export default component$(() => {
   return (
     <>
       <header class="padding-x py-8 absolute z-10 w-full">
+        <div class="absolute top-4 left-6">
+          <ChangeLocal />
+        </div>
         <nav class="flex justify-between items-center max-lg:hidden">
           <div></div>
           <ul class="flex-1 flex justify-center items-center gap-16 text-dark-2">
@@ -33,7 +37,7 @@ export default component$(() => {
         </nav>
         <div class="flex justify-end">
           <div class="flex flex-col justify-start items-end">
-            <div class="hidden max-lg:block opacity-80 hover:opacity-100">
+            <div class="hidden max-lg:block absolute opacity-80 hover:opacity-100 top-6 right-6">
               <svg width="54" height="44" viewBox="0 0 54 44" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="hover:cursor-pointer w-6 h-6"
                 onClick$={() => {
