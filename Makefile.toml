@@ -34,16 +34,67 @@ rm -rf target/release/dist
 cp -R dist target/release/dist/
 '''
 
-[tasks.release]
-dependencies = [
-  "build-node",
-  "build-release",
-  "copy-static-file"
+[tasks.set-e2e-env]
+env = { "ROCKET_ENV" = "stage" }
+
+[tasks.launch-staging]
+linux_alias = "launch-staging-linux"
+mac_alias = "launch-staging-linux"
+windows_alias = "launch-staging-windows"
+
+[tasks.launch-staging-linux]
+dependencies = [ "set-e2e-env" ]
+script = '''
+cd ./target/release
+nohup ./fvd_portfolio > ../../e2e.log 2>&1 &
+echo $! > ../../e2e_PID.txt
+cd ../..
+'''
+
+[tasks.launch-staging-windows]
+dependencies = [ "set-e2e-env" ]
+script = '''
+cd .\target\release
+start /min .\fvd_portfolio.exe > ..\..\e2e.log 
+cd ..\..
+'''
+
+[tasks.stop-staging-linux]
+script = '''
+# kill $(cat e2e_PID.txt)
+'''
+
+[tasks.stop-staging-windows]
+script = '''
+# wmic process where "name like '%%fvd_portfolio.exe%%' and commandline like '%%%%'" delete
+'''
+
+[tasks.run-e2e-test]
+command = "cargo"
+args = [ 
+  "test",
+  "e2e",
+  "--",
+  "--ignored"
 ]
 
+# I think it's a bug but i can't have a platform specific cleanup task
+# if i don't duplicate the original task
+[tasks.e2e-windows]
+run_task = { name = ["launch-staging", "run-e2e-test"], fork = true, cleanup_task = "stop-staging-windows" }
+
+[tasks.e2e-linux]
+run_task = { name = ["launch-staging", "run-e2e-test"], fork = true, cleanup_task = "stop-staging-linux" }
+
+[tasks.e2e]
+linux_alias = "e2e-linux"
+mac_alias = "e2e-linux"
+windows_alias = "e2e-windows"
+
+[tasks.release]
+run_task = { name = ["build-node", "build-release", "copy-static-file"] }
+
 [tasks.dev]
-dependencies = [
-  "build-node"
-]
+dependencies = ["build-node"]
 command = "cargo"
 args = ["run"]

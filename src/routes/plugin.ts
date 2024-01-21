@@ -2,23 +2,27 @@ import type { RequestHandler } from '@builder.io/qwik-city';
 import { config, supportedLocals } from '../speak-config';
 import { validateLocale } from 'qwik-speak';
 
-export const onRequest: RequestHandler = ({ request, params, locale, error }) => {
+export const onRequest: RequestHandler = ({ request, params, cookie, locale, error }) => {
   let lang: string | undefined = undefined;
+  const langCookie = cookie.get('lang')?.value;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const acceptLanguage = request.headers?.get('accept-language');
 
+  // this is used during build and when dev using npm run dev to find the correct lang to apply
   if (params.lang && validateLocale(params.lang)) {
     // Check supported locales
+    console.log('params');
     lang = config.supportedLocales.find(value => value.lang === params.lang)?.lang;
     // 404 error page
     if (!lang) throw error(404, 'Page not found');
+  } else if (langCookie) {
+    lang = langCookie;
   } else if (acceptLanguage) {
-    // this works locally only and dont even make sense now that we redirect to the correct lang from base index.html
-    // however this would work if we don't use SSG so i leave it like this
     const acceptLangageArray = acceptLanguage.split(';').join(',').split(',');
     lang = findLanguageSupported(acceptLangageArray);
     if (!lang) lang = config.defaultLocale.lang;
   } else {
+    console.log('default');
     lang = config.defaultLocale.lang;
   }
 

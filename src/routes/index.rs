@@ -42,8 +42,8 @@ impl SupportedLangages {
         }
     }
 
-    pub fn from_accepted_language_header_value(accept_lang: &str) -> Self {
-        let intermediate = accept_lang.split(";").join(",");
+    pub fn from_accepted_language_header_value(accept_langs: &str) -> Self {
+        let intermediate = accept_langs.split(";").join(",");
         let langs_vec = intermediate.split(",").collect_vec();
         match langs_vec
             .iter()
@@ -65,13 +65,27 @@ impl<'a, 'r> request::FromRequest<'a, 'r> for SupportedLangages {
     type Error = Infallible;
 
     fn from_request(request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
-        let accept_language = request.headers().get_one("accept-language");
-        match accept_language {
-            Some(accept_lang) => Outcome::Success(
-                SupportedLangages::from_accepted_language_header_value(accept_lang),
-            ),
-            None => Outcome::Success(SupportedLangages::default()),
+        let cookies = request.cookies();
+        let lang_cookie = cookies.get("lang");
+        match lang_cookie {
+            Some(lang_cook) => match SupportedLangages::from_iso_code(lang_cook.value()) {
+                Some(lang) => Outcome::Success(lang),
+                None => request_from_header(request),
+            },
+            None => request_from_header(request),
         }
+    }
+}
+
+fn request_from_header(
+    request: &Request<'_>,
+) -> Outcome<SupportedLangages, (rocket::http::Status, Infallible), ()> {
+    let accept_language = request.headers().get_one("accept-language");
+    match accept_language {
+        Some(accept_lang) => Outcome::Success(
+            SupportedLangages::from_accepted_language_header_value(accept_lang),
+        ),
+        None => Outcome::Success(SupportedLangages::default()),
     }
 }
 

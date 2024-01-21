@@ -2,8 +2,12 @@
 address = "localhost"
 port = 8000
 log = "normal"
-secret_key = "LCrDYCOqKUjiLKE0Rf+9HAsrzfiZXZVVjRfQ2UddvHo="
 tls = { certs = "tls/localhost.pem", key = "tls/localhost.key" }
+
+[staging]
+address = "localhost"
+port = 8001
+log = "normal"
 
 [production]
 address = "0.0.0.0"
