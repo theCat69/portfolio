@@ -65,22 +65,37 @@ impl<'a> request::FromRequest<'a> for SupportedLangages {
     type Error = Infallible;
 
     async fn from_request(request: &'a Request<'_>) -> request::Outcome<Self, Self::Error> {
-        let cookies = request.cookies();
-        let lang_cookie = cookies.get("lang");
-        match lang_cookie {
-            Some(lang_cook) => match SupportedLangages::from_iso_code(lang_cook.value()) {
-                Some(lang) => Outcome::Success(lang),
-                None => request_from_header(request),
-            },
-            None => request_from_header(request),
-        }
+        let lang_cookie_value = extract_cookie_value(request);
+        let accept_language = request.headers().get_one("accept-language");
+        from_lang_cookie_value_or_accept_lang_value(lang_cookie_value, accept_language)
     }
 }
 
-fn request_from_header(
-    request: &Request<'_>,
+fn from_lang_cookie_value_or_accept_lang_value(
+    lang_cookie_value: Option<String>,
+    accept_language: Option<&str>,
+) -> Outcome<SupportedLangages, (Status, Infallible), Status> {
+    match lang_cookie_value {
+        Some(lang_cook) => match SupportedLangages::from_iso_code(&lang_cook) {
+            Some(lang) => Outcome::Success(lang),
+            None => request_from_header_lang_value_or_default(accept_language),
+        },
+        None => request_from_header_lang_value_or_default(accept_language),
+    }
+}
+
+fn extract_cookie_value(request: &Request<'_>) -> Option<String> {
+    let cookies = request.cookies();
+    let lang_cookie = cookies.get("lang");
+    match lang_cookie {
+        Some(lang_cook) => Some(lang_cook.value().to_string()),
+        None => None,
+    }
+}
+
+fn request_from_header_lang_value_or_default(
+    accept_language: Option<&str>,
 ) -> Outcome<SupportedLangages, (rocket::http::Status, Infallible), Status> {
-    let accept_language = request.headers().get_one("accept-language");
     match accept_language {
         Some(accept_lang) => Outcome::Success(
             SupportedLangages::from_accepted_language_header_value(accept_lang),
@@ -96,7 +111,7 @@ pub async fn index(used_lang: SupportedLangages) -> Option<NamedFile> {
 
 #[cfg(test)]
 mod tests {
-    use crate::routes::index::SupportedLangages;
+    use crate::routes::index::{from_lang_cookie_value_or_accept_lang_value, SupportedLangages};
 
     #[test]
     fn from_accepted_langage_header_en_us_test() {
@@ -136,5 +151,60 @@ mod tests {
         let result = SupportedLangages::from_accepted_language_header_value(accept_lang);
         //then
         assert_eq!(result, SupportedLangages::FrFr);
+    }
+
+    #[test]
+    fn from_lang_cookie_value_or_accept_lang_value_test() {
+        // given
+        let accept_lang = Some("en-US,fr;q=0.8,it-IT;q=0.5");
+        let cookie = Some("fr-FR".to_string());
+        //when
+        let result = from_lang_cookie_value_or_accept_lang_value(cookie, accept_lang);
+        //then
+        assert_eq!(result.unwrap(), SupportedLangages::FrFr);
+    }
+
+    #[test]
+    fn from_lang_cookie_value_or_accept_lang_value_test_en_us() {
+        // given
+        let accept_lang = Some("fr-FR,fr;q=0.8,it-IT;q=0.5");
+        let cookie = Some("en-US".to_string());
+        //when
+        let result = from_lang_cookie_value_or_accept_lang_value(cookie, accept_lang);
+        //then
+        assert_eq!(result.unwrap(), SupportedLangages::EnUs);
+    }
+
+    #[test]
+    fn from_lang_cookie_value_or_accept_lang_value_no_cookie() {
+        // given
+        let accept_lang = Some("fr-FR,fr;q=0.8,it-IT;q=0.5");
+        let cookie = None;
+        //when
+        let result = from_lang_cookie_value_or_accept_lang_value(cookie, accept_lang);
+        //then
+        assert_eq!(result.unwrap(), SupportedLangages::FrFr);
+    }
+
+    #[test]
+    fn from_lang_cookie_value_or_accept_lang_value_not_corres_default() {
+        // given
+        let accept_lang = Some("de-DE,de;q=0.8,it-IT;q=0.5");
+        let cookie = Some("de-DE".to_string());
+        //when
+        let result = from_lang_cookie_value_or_accept_lang_value(cookie, accept_lang);
+        //then
+        assert_eq!(result.unwrap(), SupportedLangages::EnEn);
+    }
+
+    #[test]
+    fn from_lang_cookie_value_or_accept_lang_value_not_value_default() {
+        // given
+        let accept_lang = None;
+        let cookie = None;
+        //when
+        let result = from_lang_cookie_value_or_accept_lang_value(cookie, accept_lang);
+        //then
+        assert_eq!(result.unwrap(), SupportedLangages::EnEn);
     }
 }
