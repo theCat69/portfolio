@@ -1,5 +1,4 @@
 import { inlineTranslate } from "qwik-speak"
-import { screenJenkins, screenNotes, screenPortfolio } from "~/media"
 
 export interface DemoProject {
   id: number,
@@ -28,7 +27,7 @@ export const demoProjects = (): DemoProject[] => {
       id: 1,
       preview: {
         link: websiteRoot,
-        img: screenPortfolio,
+        img: "screen-portfolio.webp",
       },
       title: t('demo.card.portfolio.title@@Portfolio'),
       repo: `${githubAccountRoot}/portfolio`,
@@ -38,7 +37,7 @@ export const demoProjects = (): DemoProject[] => {
       id: 2,
       preview: {
         link: `${websiteRoot}/notes`,
-        img: screenNotes,
+        img: "screen-notes.webp",
       },
       title: t('demo.card.digitalpiano.title@@Digital piano'),
       repo: `${githubAccountRoot}/vite-native-play-notes`,
@@ -48,7 +47,7 @@ export const demoProjects = (): DemoProject[] => {
       id: 3,
       preview: {
         link: `${websiteRoot}/jenkins`,
-        img: screenJenkins,
+        img: "screen-jenkins.webp",
       },
       title: t('demo.card.jenkins.title@@Jenkins instance'),
       description: t('demo.card.jenkins.desc@@Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest accounrt (Guest/Guest).')
