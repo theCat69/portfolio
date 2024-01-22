@@ -12,9 +12,6 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          if(env.GIT_BRANCH == "main") {
-            sh "cargo make clean"
-          }
           sh "cargo make release"
         }
       }

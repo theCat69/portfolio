@@ -9,14 +9,7 @@ import dbIcon from './database-icon.svg';
 import testingPyramidIcon from './testing_pyramide.svg';
 import attachmentIcon from './attachment-icon.svg';
 import crossIcon from './cross-mark-icon.svg';
-import screenPortfolio from './screen-portfolio.png';
-import screenJenkins from './screen-jenkins.png';
-import screenNotes from './screen-notes.png';
 import githubLogo from './github-mark-white.svg';
-import catToReplace from './cat_to_replace.png';
-import frFlag from './FR-flag.svg';
-import usFlag from './US-flag.svg';
-import ukFlag from './UK-flag.svg';
 
 export {
   javaIcon,
@@ -30,12 +23,5 @@ export {
   testingPyramidIcon,
   attachmentIcon,
   crossIcon,
-  screenPortfolio,
-  screenJenkins,
-  screenNotes,
   githubLogo,
-  catToReplace,
-  frFlag,
-  usFlag,
-  ukFlag,
 }

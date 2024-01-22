@@ -1,6 +1,5 @@
 import { component$ } from "@builder.io/qwik";
 import { inlineTranslate } from "qwik-speak";
-import { catToReplace } from "~/media";
 
 export default component$(() => {
 
@@ -17,7 +16,7 @@ export default component$(() => {
         </div>
         <div class="sm:w-1/2 w-full h-1/2 sm:h-full flex flex-col justify-center items-center">
           <div>
-            <img src={catToReplace} alt="cat" width={300} height={500} class="h-full w-full object-contain" />
+            <img src="cat_to_replace.webp" alt="cat" width={300} height={500} class="h-full w-full object-contain" />
           </div>
         </div>
       </section>
