@@ -73,13 +73,13 @@ fn set_up_easy() -> AppEasy<'static> {
     let mut easy = Easy2::new(Collector(Vec::new()));
     easy.get(true).unwrap();
     easy.url(&get_website_url()).unwrap();
-    let mut headers = Vec::new();
-    headers.push("Host: localhost");
-    headers.push("Cache-Control: max-age=0");
-    headers
-        .push("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-    headers.push("User-Agent: Mozilla/5; Intel Mac OS X 10_10_3 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36");
-    headers.push("DNT: 1");
+    let headers = vec![
+        "Host: localhost",
+        "Cache-Control: max-age=0",
+        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "User-Agent: Mozilla/5; Intel Mac OS X 10_10_3 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36",
+        "DNT: 1",
+    ];
     AppEasy { easy, headers }
 }
 

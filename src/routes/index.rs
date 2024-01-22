@@ -42,8 +42,8 @@ impl SupportedLangages {
     }
 
     pub fn from_accepted_language_header_value(accept_langs: &str) -> Self {
-        let intermediate = accept_langs.split(";").join(",");
-        let langs_vec = intermediate.split(",").collect_vec();
+        let intermediate = accept_langs.split(';').join(",");
+        let langs_vec = intermediate.split(',').collect_vec();
         match langs_vec
             .iter()
             .find(|lang| SupportedLangages::from_iso_code(lang).is_some())
@@ -87,10 +87,7 @@ fn from_lang_cookie_value_or_accept_lang_value(
 fn extract_cookie_value(request: &Request<'_>) -> Option<String> {
     let cookies = request.cookies();
     let lang_cookie = cookies.get("lang");
-    match lang_cookie {
-        Some(lang_cook) => Some(lang_cook.value().to_string()),
-        None => None,
-    }
+    lang_cookie.map(|lang_cook| lang_cook.value().to_string())
 }
 
 fn request_from_header_lang_value_or_default(
