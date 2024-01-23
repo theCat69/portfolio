@@ -7,7 +7,7 @@ export default component$(() => {
 
   return (
     <>
-      <section id="home" class="w-full min-h-screen bg-primary flex xl:flex-row flex-col justify-evenly items-center sm:gap-10 gap-2 sm:px-16 px-2 pt-8 sm:pt-32 pb-6 sm:pb-24">
+      <section id="home" class="w-full min-h-screen bg-primary flex xl:flex-row flex-col justify-evenly items-center sm:gap-10 gap-2 sm:px-16 px-2 pt-8 sm:pt-36 pb-6 sm:pb-24">
         <div class="sm:w-1/2 w-full h-full flex flex-col justify-center gap-4">
           <h1 class="text-8xl leading-none max-sm:text-[72px] max-sm:leading-[82px] font-bold text-dark-1 font-salsa">Félix VADCARD</h1>
           <div class="flex flex-row justify-end">
