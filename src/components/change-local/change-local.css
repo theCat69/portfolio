@@ -1,0 +1,83 @@
+@keyframes flag-1-unfold {
+  from {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+
+  20% {
+    visibility: hidden;
+  }
+
+  to {
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+@keyframes flag-1-fold {
+  from {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  80% {
+    visibility: hidden;
+  }
+
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+@keyframes flag-2-unfold {
+  from {
+    transform: translateY(-200%);
+    visibility: hidden;
+  }
+
+  20% {
+    visibility: hidden;
+  }
+
+  to {
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+@keyframes flag-2-fold {
+  from {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  80% {
+    visibility: hidden;
+  }
+
+  to {
+    transform: translateY(-200%);
+    visibility: hidden;
+  }
+}
+
+.hidden-flag {
+  visibility: hidden;
+}
+
+.psc-flag-1-fold {
+  animation: flag-1-fold 0.3s forwards;
+}
+
+.psc-flag-1-unfold {
+  animation: flag-1-unfold 0.3s forwards;
+}
+
+.psc-flag-2-fold {
+  animation: flag-2-fold 0.3s forwards;
+}
+
+.psc-flag-2-unfold {
+  animation: flag-2-unfold 0.3s forwards;
+}
