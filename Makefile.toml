@@ -78,6 +78,10 @@ args = [
   "--ignored"
 ]
 
+[tasks.clippy]
+command = "cargo"
+args = ["clippy"]
+
 # I think it's a bug but i can't have a platform specific cleanup task
 # if i don't duplicate the original task
 [tasks.e2e-windows]
@@ -92,7 +96,7 @@ mac_alias = "e2e-linux"
 windows_alias = "e2e-windows"
 
 [tasks.release]
-run_task = { name = ["build-node", "build-release", "copy-static-file"] }
+run_task = { name = ["build-node", "clippy", "build-release", "copy-static-file"] }
 
 [tasks.dev]
 dependencies = ["build-node"]

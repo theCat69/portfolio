@@ -6,23 +6,23 @@
         "title": "Angular"
       },
       "formation": {
-        "desc": "I love teaching and sharing knowledge with others. In my most recents work experience I often took the role of a technical reference for my coworker. That helped me to gain skills in teaching others, writing exercise or presentations.",
+        "desc": "J'adore enseigner et partager mon savoir avec les autres. Dans mon expérience professionel la plus récente; J'ai souvent pris le role d'une référence technique pour mes collègues de travail. Ceci ma aider à progrésser dans ma transmission du savoir, écrire des éxercice ou des présentations.",
         "title": "Formation"
       },
       "java": {
-        "desc": "Java is my main focus for more than 5 years. I had the chance to work on Java versions 6, 8, 11 and 17. I mastered technologies like Spring, Spring Boot, Maven, Hibernate and JUnit.",
+        "desc": "Java est le langage de programmation que j'ai le plus utiliser pendant plus de 5ans. J'ai eu la chance de trabailler avec les versions 6, 8, 11 et  17. J'ai appris à maitriser des technologies comme Spring, SpringBoot, Maven, Hibernate et JUnit.",
         "title": "Java"
       },
       "jenkins": {
-        "desc": "Jenkins was the main tool I used for CI pipelines. From generic pipeline using libraries to project specific CI task, I experienced a wide range of feature from Jenkins.",
-        "title": "CI/CD Jenkins"
+        "desc": "Jenkins est mon outils principal pour l'intégration continue. De simple tache specifique à un projet jusqu'à des pipelines génériques complexes, j'ai pu faire l'éxpérience d'une large palette de fonctionnalités de Jenkins.",
+        "title": "Jenkins CI/CD"
       },
       "sqldb": {
-        "desc": "All the projects i worked on were using SQL Databases. I had the chance to work with Oracle database, DB2 as400, Postgres and MariaDB. I wrote a large range of SQL scripts from simple select to complicated transactional procedures."
+        "desc": "Tout les projets sur lesquels j'ai travaillé utilisait une base de donnée SQL. J'ai eu la chance de trabailler sur des BDD Oracle, DB2 as400, Postgres et MariaDB. J'ai pu écrire, dans ma carrière, un large panel de scripts SQL, du simple select, à des procédures transactionelles complexes."
       },
       "testing": {
-        "desc": "I always had a special care for testing. Testing is a complicated topic that should be thinked and rethinked during the whole lifetime of a project. Unit tests, Integration tests and end to end testing all have there advantages and inconvinient.",
-        "title": "Testing"
+        "desc": "J'ai toujours eu une attention particulière pour les tests. Tester une application est un sujet qui doit être penser et repense pendant toute la durée de vie d'un projet. Tests unitaires, tests d'intégration et tests bout en bout ont tous leurs avantages et inconvénient. Je peux vous aider à maitriser ces sujets pour un testing utile et performant.",
+        "title": "Test"
       }
     }
   }
