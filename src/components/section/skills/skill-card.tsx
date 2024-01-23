@@ -13,7 +13,7 @@ export default component$((props: Skill) => {
         </div>
         <div class="flex flex-col gap-4 py-4">
           <div class="flex flex-row justify-center">
-            <h1 class="text-2xl text-bold text-dark-1 px-5 font-salsa">{props.title}</h1>
+            <h1 class="mx-6 text-2xl text-bold text-dark-1 px-5 font-salsa">{props.title}</h1>
           </div>
           <div class="flex flex-row justify-normal text-dark-2 md:px-8 px-2 font-baskerville">
             <p>{props.description}</p>
