@@ -21,7 +21,7 @@
         "desc": "All the projects i worked on were using SQL Databases. I had the chance to work with Oracle database, DB2 as400, Postgres and MariaDB. I wrote a large range of SQL scripts from simple select to complicated transactional procedures."
       },
       "testing": {
-        "desc": "I always had a special care for testing. Testing is a complicated topic that should be thinked and rethinked during the whole lifetime of a project. Unit tests, Integration tests and end to end testing all have there advantages and inconvinient.",
+        "desc": "I always had a special care for testing. Testing is a complicated topic that should be thinked and rethinked during the whole lifetime of a project. Unit tests, Integration tests and end to end testing all have there advantages and inconvinient. I can help you realise an efficient and perfomant testing on your applications.",
         "title": "Testing"
       }
     }

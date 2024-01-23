@@ -2,27 +2,27 @@
   "demo": {
     "card": {
       "bfjvm": {
-        "desc": "I wanted to learn Rust, I am a Windows user, I love CLI tools but I dislike GitBash a lot (it is terribly slow). I wanted something similar to sdkman but compatible with windows and with good performance. Thus I made this project.",
+        "desc": "Je voulais apprendre Rust. Comme je suis un utilisateur windows et que j'adore les outils en ligne de commande mais je deteste GitBash (je le trouve terriblement lent). Je voulais pouvoir gérer mes différentes versions de Java sur mon système à la manière d'un sdkman avec de bonne performance. J'ai donc réalisé ce projet.",
         "title": "BF-J-VM"
       },
       "digitalpiano": {
-        "desc": "A simple digital piano. You can interact with it using your keyboard or a touchable screen. This project was made over a rainy week-end using Vite and TS.",
+        "desc": "Un simple piano digital. Il est possible d'interagir avec via le clavier ou un écran tactile. Ce projet a été réalisé lors d'un week-end pluvieux avec Vite et Typescript.",
         "title": "Piano digital"
       },
       "javaargparser": {
-        "desc": "This is a solution to an excercise made in few hours. The subject was Make an easy to use CLI argument parser to be used as a library\". This is my take on it.\"",
-        "title": "Java argument parser"
+        "desc": "Ce projet est une solution a un exercice réaliser en quelques heures. Le sujet été : 'Réaliser un librairie java capable de parser les arguments du programme'. Ceci est ma solution à ce problème.",
+        "title": "Parser d'argument Java"
       },
       "jenkins": {
-        "desc": "Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest accounrt (Guest/Guest).",
+        "desc": "Un lien vers ma propre instance Jenkins. Vous pouvez visiter en utilisant le compte Guest (Guest/Guest).",
         "title": "Instance jenkins"
       },
       "mailsenderapp": {
-        "desc": "A simple SpringBoot Java project I made to send emails (it is used by this website in the contact section). I used this projects as an example projects to show how to use DDD and correct testing configuration in a spring boot project.",
-        "title": "Mail sender app"
+        "desc": "Un simple projet SpringBoot pour envoyer des emails (il est utilisé par ce même site web dans la section contact). J'ai utilisé ce projet comme exemple pour montrer comment implémenter le DDD et une configuration de test optimal dans un projet spring boot.",
+        "title": "Application d'envoie de mail"
       },
       "portfolio": {
-        "desc": "This is a reference to this website. Made with Qwik(the brand new framework from the Angular team) and Tailwind.",
+        "desc": "Ceci est une référence a ce site web. Réalisé avec Qwik (le nouveau framework par l'équipe d'Angular) et Tailwind.",
         "title": "Portfolio"
       }
     }
