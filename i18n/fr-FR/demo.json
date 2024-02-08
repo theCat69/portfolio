@@ -2,7 +2,7 @@
   "demo": {
     "card": {
       "bfjvm": {
-        "desc": "Je voulais apprendre Rust. Comme je suis un utilisateur windows et que j'adore les outils en ligne de commande mais je deteste GitBash (je le trouve terriblement lent). Je voulais pouvoir gérer mes différentes versions de Java sur mon système à la manière d'un sdkman avec de bonne performance. J'ai donc réalisé ce projet.",
+        "desc": "Je voulais apprendre Rust. Comme je suis un utilisateur windows et que j'adore les outils en ligne de commande mais je déteste GitBash (je le trouve terriblement lent). Je voulais pouvoir gérer mes différentes versions de Java sur mon système à la manière d'un sdkman avec de bonne performance. J'ai donc réalisé ce projet.",
         "title": "BF-J-VM"
       },
       "digitalpiano": {
@@ -19,7 +19,7 @@
       },
       "mailsenderapp": {
         "desc": "Un simple projet SpringBoot pour envoyer des emails (il est utilisé par ce même site web dans la section contact). J'ai utilisé ce projet comme exemple pour montrer comment implémenter le DDD et une configuration de test optimal dans un projet spring boot.",
-        "title": "Application d'envoie de mail"
+        "title": "Application d'envois de mail"
       },
       "portfolio": {
         "desc": "Ceci est une référence a ce site web. Réalisé avec Qwik (le nouveau framework par l'équipe d'Angular) et Tailwind.",
