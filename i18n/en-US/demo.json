@@ -10,11 +10,11 @@
         "title": "Digital piano"
       },
       "javaargparser": {
-        "desc": "This is a solution to an excercise made in few hours. The subject was Make an easy to use CLI argument parser to be used as a library\". This is my take on it.\"",
+        "desc": "This is a solution to an exercise made in few hours. The subject was Make an easy to use CLI argument parser to be used as a library\". This is my take on it.\"",
         "title": "Java argument parser"
       },
       "jenkins": {
-        "desc": "Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest accounrt (Guest/Guest).",
+        "desc": "Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest account (Guest/Guest).",
         "title": "Jenkins instance"
       },
       "mailsenderapp": {
