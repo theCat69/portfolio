@@ -2,23 +2,23 @@
   "demo": {
     "card": {
       "bfjvm": {
-        "desc": "I wanted to learn Rust, I am a Windows user, I love CLI tools but I dislike GitBash a lot (it is terribly slow). I wanted something similar to sdkman but compatible with windows and with good performance. Thus I made this project.",
+        "desc": "I aspired to acquire knowledge in Rust programming language. Being a Windows user, I have a fondness for command-line interface (CLI) tools. However, I have developed a strong aversion towards GitBash due to its sluggish performance. Consequently, I embarked on a project to create an alternative that resembles sdkman but is compatible with Windows and offers superior performance.",
         "title": "BF-J-VM"
       },
       "digitalpiano": {
-        "desc": "A simple digital piano. You can interact with it using your keyboard or a touchable screen. This project was made over a rainy week-end using Vite and TS.",
+        "desc": "This project was developed during a rainy weekend using Vite and TS, resulting in a straightforward digital piano. It offers two options for interaction: through a keyboard or a touchable screen.",
         "title": "Digital piano"
       },
       "javaargparser": {
-        "desc": "This is a solution to an exercise made in few hours. The subject was Make an easy to use CLI argument parser to be used as a library\". This is my take on it.\"",
+        "desc": "This is my approach to solving an exercise completed within a few hours. The exercise focused on creating a user-friendly CLI argument parser that can be utilized as a library.",
         "title": "Java argument parser"
       },
       "jenkins": {
-        "desc": "Linked to my own Jenkins instance. You can browse inside and check the different projects using the Guest account (Guest/Guest).",
+        "desc": "Link to my own Jenkins instance. You can browse inside and check the different projects using the Guest account (Guest/Guest).",
         "title": "Jenkins instance"
       },
       "mailsenderapp": {
-        "desc": "A simple SpringBoot Java project I made to send emails (it is used by this website in the contact section). I used this projects as an example projects to show how to use DDD and correct testing configuration in a spring boot project.",
+        "desc": "This is a basic SpringBoot Java project specifically designed for sending emails. This project is utilized by the website's contact section. I have utilized this project as a demonstration to showcase the implementation of Domain-Driven Design (DDD) principles and the correct configuration of testing in a Spring Boot project.",
         "title": "Mail sender app"
       },
       "portfolio": {

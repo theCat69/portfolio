@@ -2,26 +2,26 @@
   "skill": {
     "card": {
       "angular": {
-        "desc": "Angular was the first node framework I encountered during my career. I used it on a lot of projects afterward from enterprise level application to small personal project.",
+        "desc": "During my professional journey, Angular emerged as the initial node framework I came across. Subsequently, I employed it in numerous projects ranging from enterprise-level applications to smaller personal endeavors.",
         "title": "Angular"
       },
       "formation": {
-        "desc": "I love teaching and sharing knowledge with others. In my most resents work experience I often took the role of a technical reference for my coworker. That helped me to gain skills in teaching others, writing exercise or presentations.",
+        "desc": "I have a deep passion for teaching and imparting knowledge to others. Throughout my recent work experience, I frequently assumed the position of a technical reference for my colleagues. This opportunity allowed me to enhance my teaching abilities and develop expertise in creating exercises and presentations.",
         "title": "Formation"
       },
       "java": {
-        "desc": "Java is my main focus for more than 5 years. I had the chance to work on Java versions 6, 8, 11 and 17. I mastered technologies like Spring, Spring Boot, Maven, Hibernate and JUnit.",
+        "desc": "For over 5 years, my primary area of expertise has been Java. Throughout this time, I have had the opportunity to work extensively with various versions of Java, including 6, 8, 11, and 17. Additionally, I have acquired a deep understanding of essential technologies such as Spring, Spring Boot, Maven, Hibernate, and JUnit.",
         "title": "Java"
       },
       "jenkins": {
-        "desc": "Jenkins was the main tool I used for CI pipelines. From generic pipeline using libraries to project specific CI task, I experienced a wide range of feature from Jenkins.",
+        "desc": "I utilized Jenkins as my the primary tool for implementing CI pipelines. Throughout my experience, I employed Jenkins for various purposes, ranging from creating generic pipelines using libraries to executing project-specific CI tasks. This allowed me to explore and leverage a wide range of features offered by Jenkins in my workflow.",
         "title": "CI/CD Jenkins"
       },
       "sqldb": {
-        "desc": "All the projects i worked on were using SQL Databases. I had the chance to work with Oracle database, DB2 as400, Postgres and MariaDB. I wrote a large range of SQL scripts from simple select to complicated transnational procedures."
+        "desc": "I have experience working on various projects that utilized SQL Databases. Throughout my career, I have had the opportunity to work with Oracle database, DB2 as400, Postgres, and MariaDB. I have written a wide range of SQL scripts, ranging from simple select statements to complex transactional procedures."
       },
       "testing": {
-        "desc": "I always had a special care for testing. Testing is a complicated topic that should be think and rethink during the whole lifetime of a project. Unit tests, Integration tests and end to end testing all have there advantages and inconvenient. I can help you realize an efficient and high performance testing on your applications.",
+        "desc": "I have always held a particular interest in testing. Testing is a complex subject that requires careful consideration throughout the entire lifespan of a project. Unit tests, integration tests, and end-to-end testing each have their own advantages and drawbacks. I am capable of assisting you in achieving efficient and high-performance testing for your applications.",
         "title": "Testing"
       }
     }
