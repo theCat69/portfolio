@@ -8,7 +8,7 @@ export default component$(() => {
   return (
     <>
       <section id="about-me" class="w-full flex justify-center min-h-screen bg-middle">
-        <div class="h-min-screen flex flex-col text-center items-center justify-center gap-8 px-16 py-8">
+        <div class="h-min-screen flex flex-col text-center items-center justify-center gap-8 md:px-16 px-4 py-8">
           <h1 class="text-4xl text-white font-salsa">{t('app.aboutme')}</h1>
           <div class="flex flex-col text-center items-center justify-center gap-4">
             <p class="text-white text-xl lg:text-2xl font-baskerville">{t('aboutme.text')}</p>

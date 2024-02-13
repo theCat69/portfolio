@@ -1,10 +1,11 @@
 import type { NoSerialize } from "@builder.io/qwik";
-import { component$, noSerialize, useSignal, useStore, $, useContext } from "@builder.io/qwik";
+import { component$, noSerialize, useSignal, useStore, $, useStyles$, useVisibleTask$, useContext } from "@builder.io/qwik";
 import { attachmentIcon, crossIcon } from "~/media";
 import { ValiError, array, blob, email, maxSize, minLength, object, parse, string } from 'valibot';
 import { NotificationAddMethodContext, NotificationContext } from "~/routes/[...lang]";
 import { inlineTranslate } from "qwik-speak";
 import type { NotificationProps } from "../notifications/notification";
+import styles from './contact.css?inline';
 
 interface ContactForm {
   name: string,
@@ -150,7 +151,10 @@ const sendMailToService = async (contactValues: ContactFormDto) => {
   return reponse.json();
 };
 
+
 export default component$(() => {
+
+  useStyles$(styles);
 
   const t = inlineTranslate();
 
@@ -158,6 +162,8 @@ export default component$(() => {
   const contactFormErrorState = useSignal<ContactFormError[]>([]);
   const notificationStore = useContext(NotificationContext);
   const addNotification = useContext(NotificationAddMethodContext);
+
+  const isDraggedOver = useSignal(false);
 
   const getErrorForField = (key: keyof ContactForm) => contactFormErrorState.value.filter(fieldError => fieldError.field === key);
 
@@ -198,6 +204,39 @@ export default component$(() => {
     }
   });
 
+  const dropBoxRef = useSignal<HTMLElement>();
+
+  // i am forced to use a visible task here to handle access to
+  // state during the drop event
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({ cleanup }) => {
+    if (dropBoxRef.value) {
+      // Use the DOM API to add an event listener.
+      const drop = (e: DragEvent) => {
+        e.preventDefault();
+        if (e.dataTransfer?.items) {
+          [...e.dataTransfer.items].forEach((item) => {
+            if (item.kind === "file") {
+              const file = item.getAsFile();
+              if (file) contactFormState.files?.push(noSerialize(file));
+            }
+          });
+        } else {
+          [...e.dataTransfer!.files].forEach((file) => {
+            if (file) contactFormState.files?.push(noSerialize(file));
+          });
+        }
+        isDraggedOver.value = false;
+      };
+
+      dropBoxRef.value!.addEventListener('drop', drop);
+
+      cleanup(() => {
+        dropBoxRef.value!.removeEventListener('drop', drop);
+      });
+    }
+  });
+
 
   return (
     <>
@@ -210,7 +249,24 @@ export default component$(() => {
               handleSubmit(contactFormState);
             }
           }}
-            class="grid grid-cols-1 justify-items-center gap-4 bg-middle px-5 py-5 xl:w-1/2 md:w-3/4 w-full rounded-xl my-5"
+            class={["grid grid-cols-1 justify-items-center gap-4 bg-middle px-5 py-5 xl:w-1/2 md:w-3/4 w-full rounded-xl my-5",
+              {
+                'dropping': isDraggedOver.value
+              }
+            ]}
+            contact-form-state={contactFormState}
+            onDragOver$={(e: DragEvent) => {
+              e.preventDefault();
+              isDraggedOver.value = true;
+            }}
+            onDragEnter$={(e: DragEvent) => {
+              e.preventDefault();
+            }}
+            onDragLeave$={(e: DragEvent) => {
+              e.preventDefault();
+              isDraggedOver.value = false;
+            }}
+            ref={dropBoxRef}
           >
             <div class="flex flex-row w-full gap-2">
               <div class="flex 2xl:flex-row flex-col w-full xl:gap-5 gap-2">
@@ -238,8 +294,8 @@ export default component$(() => {
                 </label>
               </div>
               <div class="flex flex-col items-end justify-start w-full gap-2">
-                <label for="file-input" class="flex flex-col items-end justify-start w-full hover:cursor-pointer">
-                  <img src={attachmentIcon} alt="attachmentIcon" width={30} height={30} class="mt-2 mr-2" />
+                <label for="file-input" class="flex flex-col items-end justify-start">
+                  <img src={attachmentIcon} alt="attachmentIcon" width={30} height={30} class="mt-2 mr-2 hover:cursor-pointer" />
                 </label>
                 <div >
                   {contactFormState.files && contactFormState.files.map((file) => (
@@ -282,7 +338,7 @@ export default component$(() => {
             <button class="bg-light-1 text-dark-1 py-5 px-20 rounded-full hover:text-white hover:bg-light-2 hover:cursor-pointer active:bg-dark-1 mt-5 font-baskerville">{t('contact.send@@Send')}</button>
           </form>
         </div>
-      </section>
+      </section >
     </>
   )
 })
