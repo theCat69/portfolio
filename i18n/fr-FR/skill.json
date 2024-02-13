@@ -2,26 +2,26 @@
   "skill": {
     "card": {
       "angular": {
-        "desc": "Angular a été le premier framework node que j'ai pu rencontrer pendant ma carrière. Je l'ai utilisé sur beaucoup de projets en entreprise ou pour des petits projets personnel.",
+        "desc": "Angular a été le premier framework node que j'ai eu l'occasion de rencontrer pendant ma carrière. Depuis, j'ai eu l'opportunité de l'utiliser sur une multitude de projets, aussi bien en entreprise que pour des projets personnels.",
         "title": "Angular"
       },
       "formation": {
-        "desc": "J'adore enseigner et partager mon savoir avec les autres. Dans mon expérience professionnel la plus récente; J'ai souvent pris le rôle d'une référence technique pour mes collègues de travail. Ceci ma aider à progresser dans ma transmission du savoir, écrire des exercice ou des présentations.",
+        "desc": "J'apprécie énormément l'enseignement et le partage de mes connaissances avec autrui. Pendant ma dernière expérience professionnelle, j'ai fréquemment assumé le rôle de référence technique pour mes collègues. Cela m'a permis d'améliorer ma capacité à transmettre mes connaissances, à élaborer des exercices et des présentations",
         "title": "Formation"
       },
       "java": {
-        "desc": "Java est le langage de programmation que j'ai le plus utiliser pendant plus de 5ans. J'ai eu la chance de travailler avec les versions 6, 8, 11 et  17. J'ai appris à maitriser des technologies comme Spring, SpringBoot, Maven, Hibernate et JUnit.",
+        "desc": "Pendant plus de 5 ans, Java a été le langage de programmation que j'ai le plus utilisé. J'ai eu l'opportunité de participer à divers projets utilisant les versions 6, 8, 11 et 17 de Java. Au cours de cette période, j'ai acquis une expertise dans l'utilisation de technologies telles que Spring, SpringBoot, Maven, Hibernate et JUnit.",
         "title": "Java"
       },
       "jenkins": {
-        "desc": "Jenkins est mon outils principal pour l'intégration continue. De simple tache spécifique à un projet jusqu'à des pipelines génériques complexes, j'ai pu faire l'expérience d'une large palette de fonctionnalités de Jenkins.",
+        "desc": "Jenkins occupe une place centrale dans mon processus d'intégration continue. Des tâches simples et spécifiques à un projet aux pipelines complexes et génériques, j'ai pu explorer toute la gamme de fonctionnalités offertes par Jenkins.",
         "title": "Jenkins CI/CD"
       },
       "sqldb": {
-        "desc": "Tout les projets sur lesquels j'ai travaillé utilisait une base de donnée SQL. J'ai eu la chance de travailler sur des BDD Oracle, DB2 as400, Postgres et MariaDB. J'ai pu écrire, dans ma carrière, un large panel de scripts SQL, du simple select, à des procédures transactionnelles complexes."
+        "desc": "J'ai eu l'opportunité de collaborer sur divers projets qui ont tous nécessité l'utilisation d'une base de données SQL. Au cours de ma carrière, j'ai eu la chance de travailler avec différentes bases de données telles que Oracle, DB2 as400, Postgres et MariaDB. J'ai ainsi pu développer une expertise dans l'écriture de scripts SQL, allant du simple \"select\" à des procédures transactionnelles complexes."
       },
       "testing": {
-        "desc": "J'ai toujours eu une attention particulière pour les tests. Tester une application est un sujet qui doit être penser et repense pendant toute la durée de vie d'un projet. Tests unitaires, tests d'intégration et tests bout en bout ont tous leurs avantages et inconvénient. Je peux vous aider à maitriser ces sujets pour un testing utile et performant.",
+        "desc": "J'ai toujours accordé une grande importance aux tests. La réalisation de tests pour une application est un aspect qui nécessite une réflexion constante tout au long de la durée de vie d'un projet. Les tests unitaires, les tests d'intégration et les tests bout en bout présentent chacun leurs avantages et leurs inconvénients. Je suis en mesure de vous accompagner dans la maîtrise de ces sujets afin d'obtenir des tests utiles et performants.",
         "title": "Test"
       }
     }

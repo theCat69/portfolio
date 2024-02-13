@@ -2,15 +2,15 @@
   "demo": {
     "card": {
       "bfjvm": {
-        "desc": "Je voulais apprendre Rust. Comme je suis un utilisateur windows et que j'adore les outils en ligne de commande mais je déteste GitBash (je le trouve terriblement lent). Je voulais pouvoir gérer mes différentes versions de Java sur mon système à la manière d'un sdkman avec de bonne performance. J'ai donc réalisé ce projet.",
+        "desc": "Dans l'intention d'apprendre Rust. En tant qu'utilisateur de Windows et passionné par les outils en ligne de commande, je ne suis pas du tout satisfait de GitBash (je le trouve extrêmement lent). Je voulais pouvoir gérer mes différentes versions de Java sur mon système de manière similaire à sdkman, mais avec des performances optimales. C'est la raison pour laquelle j'ai entrepris ce projet.",
         "title": "BF-J-VM"
       },
       "digitalpiano": {
-        "desc": "Un simple piano digital. Il est possible d'interagir avec via le clavier ou un écran tactile. Ce projet a été réalisé lors d'un week-end pluvieux avec Vite et Typescript.",
+        "desc": "Un simple piano numérique. On peut interagir avec lui à travers le clavier ou un écran tactile. Ce projet a été réalisé lors d'un week-end pluvieux en utilisant Vite et Typescript.",
         "title": "Piano digital"
       },
       "javaargparser": {
-        "desc": "Ce projet est une solution a un exercice réaliser en quelques heures. Le sujet été : 'Réaliser un librairie java capable de parser les arguments du programme'. Ceci est ma solution à ce problème.",
+        "desc": "Ce projet représente une réponse à un exercice qui a été réalisé en quelques heures. Le sujet de l'exercice était de \"créer une bibliothèque Java capable de parser les arguments du programme\". Voici ma solution à ce problème.",
         "title": "Parser d'argument Java"
       },
       "jenkins": {
@@ -18,11 +18,11 @@
         "title": "Instance jenkins"
       },
       "mailsenderapp": {
-        "desc": "Un simple projet SpringBoot pour envoyer des emails (il est utilisé par ce même site web dans la section contact). J'ai utilisé ce projet comme exemple pour montrer comment implémenter le DDD et une configuration de test optimal dans un projet spring boot.",
+        "desc": "Un simple projet SpringBoot pour l'envoi d'e-mails (il est utilisé par le site web lui-même dans la section contact). J'ai pris ce projet comme exemple afin d'illustrer comment mettre en œuvre le DDD et une configuration de test optimale dans un projet Spring Boot.",
         "title": "Application d'envois de mail"
       },
       "portfolio": {
-        "desc": "Ceci est une référence a ce site web. Réalisé avec Qwik (le nouveau framework par l'équipe d'Angular) et Tailwind.",
+        "desc": "Ceci est une référence à ce site web. Réalisé avec Qwik (le nouveau framework développé par l'équipe d'Angular) et Tailwind.",
         "title": "Portfolio"
       }
     }
